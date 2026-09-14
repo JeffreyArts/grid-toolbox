@@ -54,6 +54,17 @@ body {
     width: 100%;
     border-radius: 8px;
     box-shadow: 8px 8px 16px 0px rgba(0,0,0,.16);
+
+    &[ratio="1x1"] {
+        aspect-ratio: 1;
+    }
+}
+
+.canvas-view {
+    canvas {
+        width: 100%;
+        display: block;
+    }
 }
 
 h1 {

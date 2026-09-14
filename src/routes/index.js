@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/home.vue";
 import OptionsOverview from "./pages/options-overview.vue";
+import HorizontalLine from "./pages/horizontal-line.vue";
 
 const routes = [
   {
@@ -12,7 +13,13 @@ const routes = [
     path: "/options-overview",
     name: "Options overview",
     component: OptionsOverview,
-  }
+  },
+  {
+    path: "/horizontal-line",
+    name: "Horizontal line",
+    component: HorizontalLine,
+  },
+  
 ];
 
 
