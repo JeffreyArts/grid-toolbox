@@ -1,4 +1,4 @@
-<style src="./site-menu.scss"></style>
+<style src="./site-menu.css"></style>
 <template>
     <div class="site-menu-container">
         <div class="site-menu">

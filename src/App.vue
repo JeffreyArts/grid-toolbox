@@ -11,6 +11,6 @@ import siteMenu from './components/site-menu/site-menu.vue'
 // Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>
 
-<style src="./app.scss"></style>
-<!-- <style src="./routes/diversity/diversity.scss"></style> -->
+<style src="./app.css"></style>
+<!-- <style src="./routes/diversity/diversity.css"></style> -->
 

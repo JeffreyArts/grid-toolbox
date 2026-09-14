@@ -1,7 +1,7 @@
 @import 'normalize.css';
-@import 'assets/scss/variables.scss';
-@import 'assets/scss/option-groups.scss';
-@import 'assets/scss/buttons-container.scss';
+@import 'assets/css/variables.css';
+@import 'assets/css/option-groups.css';
+@import 'assets/css/buttons-container.css';
 
 
 body {
@@ -71,12 +71,12 @@ input:-webkit-autofill {
 
 //selection
 ::selection {
-  background: $accentColor;
+  background: var(--accentColor);
   color: #333;
 }
 
 ::-moz-selection {
-  background: $accentColor;
+  background: var(--accentColor);
   color: #333;
 }
 
@@ -119,7 +119,7 @@ src: url("/src/assets/fonts/fixed-sys.otf");
 
 .button {
     color: #eee;
-    background-color: $accentColor;
+    background-color: var(--accentColor);
     border: 0 none transparent;
     padding: 8px 16px;
     transition: .16s all ease;

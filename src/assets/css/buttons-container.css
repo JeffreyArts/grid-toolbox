@@ -13,13 +13,13 @@
         }
 
         &:hover {
-            background-color: $accentColor;
+            background-color: var(--accentColor);
             color: #fff;
         }
 
         &.__isRecording {
             background-color: #fff;
-            color: #1a1b1c; // black
+            color: #1a1b1c;
             .recording-icon {
                 color: #ba0202;
                 animation: recordAnimation 0.8s infinite;
@@ -27,7 +27,7 @@
         }
 
         &.__isLoading {
-            background-color: $accentColor;
+            background-color: var(--accentColor);
             color: #fff;
 
             .loading-icon {

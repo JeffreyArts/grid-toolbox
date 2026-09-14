@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "./home/home.vue";
-import OptionsOverview from "./options-overview/options-overview.vue";
+import Home from "./pages/home.vue";
+import OptionsOverview from "./pages/options-overview.vue";
 
 const routes = [
   {

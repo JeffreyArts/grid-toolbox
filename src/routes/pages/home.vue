@@ -1,5 +1,4 @@
 <template>
-
     <div class="toolbox-home">
         <h1 class="title">Toolbox homepage</h1>
 
@@ -30,9 +29,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 
-    @import '../../assets/scss/variables.scss';
+    @import '@/assets/css/variables.css';
     .toolbox-home {
         display: flex;
         flex-flow: column;
@@ -56,10 +55,10 @@ export default {
                 max-height: 64vh;
                 fill: #fff;
                 transition: .64s all ease;
-                // transition-timing-function: steps(8, end);
+                /* transition-timing-function: steps(8, end); */
                 &:hover {
                     transform: rotate(45deg) scale(1.1);
-                    fill: $accentColor;
+                    fill: var(--accentColor);
                 }
             }
         }

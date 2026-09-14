@@ -133,16 +133,13 @@ export default {
 </script>
 
 
-<style lang="scss">
-
-    @import '../../assets/scss/variables.scss';
-
+<style lang="css">
     .options-overview {
         .viewport-content {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: $accentColor;
+            color: var(--accentColor);
             font-size: 16vw;
         }
     }

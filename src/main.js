@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import router from './routes'
-import 'html-ratio-component'
 import App from './App.vue'
 
 createApp(App)
