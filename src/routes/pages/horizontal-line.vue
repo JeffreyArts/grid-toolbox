@@ -38,6 +38,13 @@
                             No
                         </label>
                     </div>
+
+                    <div class="option">
+                        <label for="color">
+                            Color
+                        </label>
+                        <input type="color" id="color" v-model="options.color" >
+                    </div>
                 </div>
 
 
@@ -48,7 +55,6 @@
 
 
 <script>
-console.log("ASDF")
 export default {
     props: [],
     data() {
@@ -62,7 +68,8 @@ export default {
             },
             options: {
                 stepSize: 32,
-                skipDot: false
+                skipDot: false,
+                color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
@@ -70,12 +77,18 @@ export default {
         "options.stepSize": {
             handler(v) {
                 if (this.canvas.ctx) {
-                    this.drawHorizontalLine(this.canvas.height/2 - this.options.stepSize/2)
+                    this.updateCanvas
                 } else {
-                    setTimeout(() => {
-                        this.drawHorizontalLine(this.canvas.height/2 - this.options.stepSize/2)
-                    })
+                    setTimeout(this.updateCanvas)
                 }
+                return parseFloat(v)
+            },
+            immediate: true
+        },
+        "options.color": {
+            handler(v) {
+                document.documentElement.style.setProperty("--accentColor", v)
+                this.updateCanvas()
                 return parseFloat(v)
             },
             immediate: true
@@ -83,11 +96,9 @@ export default {
         "options.skipDot": {
             handler(v) {
                 if (this.canvas.ctx) {
-                    this.drawHorizontalLine(this.canvas.height/2 - this.options.stepSize/2)
+                    this.updateCanvas()
                 } else {
-                    setTimeout(() => {
-                        this.drawHorizontalLine(this.canvas.height/2 - this.options.stepSize/2)
-                    })
+                    setTimeout(this.updateCanvas)
                 }
                 return parseFloat(v)
             },
@@ -106,7 +117,6 @@ export default {
             if (!canvas) {
                 throw new Error("Can not find canvas")
             }
-            console.log("setCanvasDimensions")
 
             canvas.width = this.canvas.width
             canvas.height = this.canvas.height
@@ -124,9 +134,11 @@ export default {
             ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
 
             // Bepaal de kleur van de stippen
-            const color = getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()    
-            const stepSize = this.options.stepSize
+            const color = this.options.color  
             ctx.fillStyle = color;
+            
+            // Bepaal het formaat van de cirkels
+            const stepSize = this.options.stepSize
             
             // For-lus voor het aanpassen van de x-positie
             for (let x = 0; x < this.canvas.width + stepSize*2; x+=stepSize*2) {
@@ -144,6 +156,9 @@ export default {
             }            
 
         },
+        updateCanvas() {
+            this.drawHorizontalLine(this.canvas.height/2 - this.options.stepSize/2)
+        },
         drawBackgroundColor(color) {
             const ctx = this.canvas.ctx
             if (!ctx) {
@@ -151,7 +166,7 @@ export default {
             }
             
             if (!color) {
-                color = getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
+                color = this.options.color
             }
 
             ctx.fillStyle = color;
