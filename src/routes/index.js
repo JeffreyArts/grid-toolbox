@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/home.vue";
 import OptionsOverview from "./pages/options-overview.vue";
 import HorizontalLine from "./pages/horizontal-line.vue";
+import VerticalLine from "./pages/vertical-line.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/horizontal-line",
     name: "Horizontal line",
     component: HorizontalLine,
+  },
+  {
+    path: "/vertical-line",
+    name: "Vertical line",
+    component: VerticalLine,
   },
   
 ];
