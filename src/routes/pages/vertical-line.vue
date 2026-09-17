@@ -3,13 +3,16 @@
     <div class="canvas-view">
         <header class="title">
             <h1>Vertical line</h1>
+            <hr>
         </header>
 
-        <hr>
         <section class="viewport">
             <div class="viewport-content" ratio="1x1">
                 <canvas ref="canvas"></canvas>
             </div>
+
+            <highlightjs language="js" :code="codeSnippet" />
+            <!-- <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/ellipse">Details ellipse functie</a> -->
         </section>
 
         <aside class="sidebar">
@@ -18,7 +21,7 @@
 
                     <div class="option">
                         <label for="range">
-                            Range input
+                            Step size
                         </label>
                         <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.stepSize">
                         <!-- optional number display-->
@@ -55,10 +58,44 @@
 
 
 <script>
+const codeSnippet = 
+`
+// Belangrijke defaults (check horizontal-line voor details)
+ctx.fillStyle = "RebeccaPurple";
+ctx.beginPath()
+const radius = 40
+const diameter = size*2 // De "breedte"/"hoogte" van de cirkel
+let skipDot = false
+
+// De x-positie van alle cirkels moet in het midden van het canvas komen
+const x = canvas.width / 2
+        
+// We doen hier hetzelfde als bij de horizontale lijn, 
+// maar dan voor de y-positie van de cirkels
+
+for (let y = 0; y < canvas.height + diameter; y+=diameter) {
+
+    // Met 'continue', skip je als het ware een stap in de lus.
+    // In dit geval wanneer de stip een oneven stip is, dan skippen we de lus.
+    if (y/diameter % 2) {
+        continue;
+    }
+
+    // Deze code wordt alleen uitgevoerd wanneer de if-statement false is
+    ctx.ellipse(x, y, size, size, 0, 0, Math.PI * 2)
+
+}         
+
+// Vul alle lijnen met de geselecteerde kleur 
+ctx.fill()
+`
+
+
 export default {
     props: [],
     data() {
         return {
+            codeSnippet,
             value: 0,
             canvas: {
                 el: null,
@@ -77,7 +114,7 @@ export default {
         "options.stepSize": {
             handler(v) {
                 if (this.canvas.ctx) {
-                    this.updateCanvas
+                    this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }

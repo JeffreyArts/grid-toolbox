@@ -1,11 +1,11 @@
 <template>
 
-    <div class="options-overview">
+    <div class="canvas-overview options-overview">
         <header class="title">
             <h1>Options overview</h1>
+            <hr>
         </header>
 
-        <hr>
         <section class="viewport">
             <div class="viewport-content" ratio="1x1">
                 {{value}}
@@ -14,9 +14,6 @@
 
         <aside class="sidebar">
             <div class="options">
-
-
-
 
                 <div class="option-group" name="Selectables">
                     <div class="option">

@@ -3,13 +3,16 @@
     <div class="canvas-view">
         <header class="title">
             <h1>Vertical + Horizontal lines</h1>
+            <hr>
         </header>
 
-        <hr>
         <section class="viewport">
             <div class="viewport-content" ratio="1x1">
                 <canvas ref="canvas"></canvas>
             </div>
+
+            <highlightjs language="js" :code="codeSnippet" />
+            <!-- <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/ellipse">Details ellipse functie</a> -->
         </section>
 
         <aside class="sidebar">
@@ -55,10 +58,36 @@
 
 
 <script>
+const codeSnippet = 
+`
+// Belangrijke defaults (check horizontal-line voor details)
+ctx.fillStyle = "RebeccaPurple";
+ctx.beginPath()
+const radius = 40
+const diameter = size*2 // De "breedte"/"hoogte" van de cirkel
+
+        
+// Als eerste maken we een lus voor alle x-posities
+for (let x = 0; x < canvas.width + diameter; x+=diameter) {
+    
+    // BINNEN deze lus, maken we een nieuwe lus voor alle y-posities
+    for (let y = 0; y < canvas.height + diameter; y+=diameter) {
+    
+        // Dan tekenen we gewoon een cirkel net als normaal
+        ctx.ellipse(x, y, size, size, 0, 0, Math.PI * 2)
+    }
+}         
+
+// Vul alle lijnen weer in met de geselecteerde kleur 
+ctx.fill()
+`
+
+
 export default {
     props: [],
     data() {
         return {
+            codeSnippet,
             value: 0,
             canvas: {
                 el: null,
@@ -77,7 +106,7 @@ export default {
         "options.stepSize": {
             handler(v) {
                 if (this.canvas.ctx) {
-                    this.updateCanvas
+                    this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }

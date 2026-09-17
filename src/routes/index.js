@@ -19,22 +19,22 @@ const routes = [
   },
   {
     path: "/dot",
-    name: "Dot",
+    name: "1. Dot",
     component: Dot,
   },
   {
     path: "/horizontal-line",
-    name: "Horizontal line",
+    name: "2. Horizontal line",
     component: HorizontalLine,
   },
   {
     path: "/vertical-line",
-    name: "Vertical line",
+    name: "3. Vertical line",
     component: VerticalLine,
   },
   {
     path: "/vertical-plus-horizontal-line",
-    name: "Vertical + Horizontal line",
+    name: "4. Vertical + Horizontal line",
     component: VerticalPlusHorizontalLine,
   },
   

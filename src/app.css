@@ -2,6 +2,7 @@
 @import 'assets/css/variables.css';
 @import 'assets/css/option-groups.css';
 @import 'assets/css/buttons-container.css';
+@import 'highlight.js/styles/atom-one-dark.css';
 
 
 body {
@@ -18,9 +19,9 @@ body {
 
 .viewport {
     width: 100%;
-    padding-top: 32px;
-    padding-right: 32px;
-    float: left;
+    /* float: left; */
+    grid-column: span 4;
+
 
     .__hideCursor {
         cursor: none;
@@ -34,20 +35,11 @@ body {
 
 .sidebar {
     width: 100%;
-    padding-top: 64px;
+    padding-top: 8px;
     float: left;
+    grid-column: span 2;
 }
 
-@media all and (min-width: 640px) {
-    .viewport {
-        width: calc(60% - 40px);
-    }
-    .sidebar {
-        padding-top: 64px;
-        margin-left: 40px;
-        width: 40%;
-    }
-}
 
 .viewport-content {
     background-color: #fff;
@@ -61,10 +53,18 @@ body {
 }
 
 .canvas-view {
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 32px;
+
     canvas {
         width: 100%;
         display: block;
     }
+}
+
+.title {
+    grid-column: span 6;
 }
 
 h1 {
@@ -75,12 +75,22 @@ h1 {
     box-sizing: border-box
 }
 
+a {
+    color: var(--accentColor);
+    filter: hue-rotate(16deg);
+    transition: .32s all linear;
+    transition-timing-function: linear(0, 0.029 0.8%, 0.13 1.8%, 0.908 7.2%, 1.051 9.1%, 1.112 11.2%, 1.116 12.2%, 1.106 13.4%, 1.007 19.5%, 0.987 23.1%, 1.001 35%, 1);
+    &:hover, &:focus {
+        filter: hue-rotate(0)
+    }
+}
+
 
 input:-webkit-autofill {
   background-color: #fff;
 }
 
-//selection
+/* selection */
 ::selection {
   background: var(--accentColor);
   color: #333;
@@ -108,7 +118,7 @@ src: url("/src/assets/fonts/fixed-sys.otf");
 }
 
 
-//main router outlet
+/* main router outlet */
 .app {
   height: 100%;
   position: relative;
@@ -118,8 +128,10 @@ src: url("/src/assets/fonts/fixed-sys.otf");
     display: flex;
     transition: width ease 0.24s;
     width: 100%;
-    height: 100%;
+    height: 100dvh;
     opacity: 1; transform: translateY(0);
+    padding-bottom: 80px;
+    
     > * {
         margin: 0 32px 32px 64px;
         width: calc(100% - 96px);

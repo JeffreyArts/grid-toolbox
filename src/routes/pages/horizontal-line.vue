@@ -3,13 +3,16 @@
     <div class="canvas-view">
         <header class="title">
             <h1>Horizontal line</h1>
+            <hr>
         </header>
 
-        <hr>
         <section class="viewport">
             <div class="viewport-content" ratio="1x1">
                 <canvas ref="canvas"></canvas>
             </div>
+
+            <highlightjs language="js" :code="codeSnippet" />
+            <!-- <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/ellipse">Details ellipse functie</a> -->
         </section>
 
         <aside class="sidebar">
@@ -18,7 +21,7 @@
 
                     <div class="option">
                         <label for="range">
-                            Range input
+                            Step size
                         </label>
                         <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.stepSize">
                         <!-- optional number display-->
@@ -55,10 +58,61 @@
 
 
 <script>
+const codeSnippet = 
+`
+// Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
+ctx.fillStyle = "RebeccaPurple";
+
+// Zeg eerst dat je een nieuwe lijn wilt gaan beginnen (mogen meerdere losse lijnen zijn)
+ctx.beginPath()
+
+// Bepaal hoe groot de cirkels moeten worden
+// De radius is de afstand vanaf het midden van een cirkel tot aan de rand
+const radius = 40
+const diameter = size*2 // De "breedte"/"hoogte" van de cirkel
+
+// De y-positie van alle cirkels moet in het midden van het canvas komen
+const y = canvas.height / 2
+
+/************ 
+ * Door het tekenen van een cirkel in een for-lus te plaatsen kunnen we er 
+ * meerdere achter elkaar tekenen. We bepalen hier dat x eerst 0 is,
+ * daarna tellen we er de diameter bij op. Dit doen we net zo lang totdat
+ * de waarde van x groter is dan de breedte van het canvas. 
+ * 
+ * Of in dit geval eigenlijk de canvas.width + diameter. Mocht het canvas breedte namelijk
+ * net niet lekker uitkomen, omdat deze 410 pixels breed is. Met 410 pixels is er immers
+ * geen ruimte voor 11 cirkels, dus dan zou er na de tiende cirkel witruimte ontstaan.
+************/
+for (let x = 0; x < canvas.width + diameter; x+=diameter) {
+    // ellipse(x, y, radiusX, radiusY, rotatie, startpunt, eindpunt)
+    ctx.ellipse( 
+        x,
+        canvas.height/2,
+        size,
+        size,
+        0,
+        0,
+        Math.PI * 2
+    )
+}         
+
+// Vul de lijnen van de cirkels met de geselecteerde kleur 
+ctx.fill()
+
+/************ 
+ * Voor het overslaan van de cirkels is er in de echte code een if-statement
+ * geplaatst die ervoor zorgt dat de cirkels om-en-om geplaatst worden
+************/
+
+`
+
+
 export default {
     props: [],
     data() {
         return {
+            codeSnippet,
             value: 0,
             canvas: {
                 el: null,
@@ -77,7 +131,7 @@ export default {
         "options.stepSize": {
             handler(v) {
                 if (this.canvas.ctx) {
-                    this.updateCanvas
+                    this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
@@ -139,10 +193,10 @@ export default {
             
             // Bepaal het formaat van de cirkels
             const stepSize = this.options.stepSize
-            
             // For-lus voor het aanpassen van de x-positie
+            ctx.beginPath()
+            
             for (let x = 0; x < this.canvas.width + stepSize*2; x+=stepSize*2) {
-
                 // Alle even stippen moeten worden overgeslagen wanneer skipDot == true
                 // console.log(x, x/stepSize/2, x/stepSize/2 % 2)
                 if (this.options.skipDot && x/stepSize/2 % 2) {
@@ -150,10 +204,10 @@ export default {
                 }
 
                 // Teken de stip, het optellen van de y positie met stepSize/2 zorgt ervoor dat de stip vanuit het midden wordt getekend
-                ctx.beginPath()
+                
                 ctx.ellipse( x , y + stepSize/2, stepSize, stepSize, 0, 0, Math.PI * 2)
-                ctx.fill()
             }            
+            ctx.fill()
 
         },
         updateCanvas() {

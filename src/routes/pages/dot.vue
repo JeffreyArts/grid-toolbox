@@ -3,13 +3,16 @@
     <div class="canvas-view">
         <header class="title">
             <h1>Dot</h1>
+            <hr>
         </header>
 
-        <hr>
         <section class="viewport">
             <div class="viewport-content" ratio="1x1">
                 <canvas ref="canvas"></canvas>
             </div>
+
+            <highlightjs language="js" :code="codeSnippet" />
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/ellipse">Details ellipse functie</a>
         </section>
 
         <aside class="sidebar">
@@ -41,10 +44,37 @@
 
 
 <script>
+
+const codeSnippet = 
+`
+// Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
+ctx.fillStyle = "RebeccaPurple";
+
+// Zeg eerst dat je een nieuwe lijn wilt gaan beginnen
+ctx.beginPath()
+
+// Teken een lijn in de vorm van een cirkel
+// ellipse(x, y, radiusX, radiusY, rotatie, startpunt, eindpunt)
+ctx.ellipse( 
+    canvas.width/2,
+    canvas.height/2,
+    dotSize,
+    dotSize,
+    0,
+    0,
+    Math.PI * 2
+)
+
+// Vul de lijn van de cirkel met de geselecteerde kleur 
+ctx.fill()
+`
+
+
 export default {
     props: [],
     data() {
         return {
+            codeSnippet,
             value: 0,
             canvas: {
                 el: null,
