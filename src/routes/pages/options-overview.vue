@@ -1,6 +1,6 @@
 <template>
 
-    <div class="canvas-overview options-overview">
+    <div class="canvas-view options-overview">
         <header class="title">
             <h1>Options overview</h1>
             <hr>

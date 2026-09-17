@@ -2,7 +2,7 @@
 <template>
     <div class="site-menu-container">
         <div class="site-menu">
-            <router-link to="/" class="site-menu-title">Toolbox</router-link>
+            <router-link to="/" class="site-menu-title">Grid Toolbox</router-link>
 
             <div class="site-menu-list">
                 <router-link :to="route.path" class="site-menu-list-item" v-for="route in routes" :class="[currentRoute.name == route.name ? '__isCurrent' : '']">{{route.name}}</router-link>
