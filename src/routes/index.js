@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/home.vue";
 import OptionsOverview from "./pages/options-overview.vue";
+import Dot from "./pages/dot.vue";
 import HorizontalLine from "./pages/horizontal-line.vue";
 import VerticalLine from "./pages/vertical-line.vue";
 import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.vue"
@@ -15,6 +16,11 @@ const routes = [
     path: "/options-overview",
     name: "Options overview",
     component: OptionsOverview,
+  },
+  {
+    path: "/dot",
+    name: "Dot",
+    component: Dot,
   },
   {
     path: "/horizontal-line",
