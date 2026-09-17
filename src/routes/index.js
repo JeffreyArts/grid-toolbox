@@ -5,6 +5,7 @@ import Dot from "./pages/dot.vue";
 import HorizontalLine from "./pages/horizontal-line.vue";
 import VerticalLine from "./pages/vertical-line.vue";
 import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.vue"
+import TekenFunctie from "./pages/teken-functie.vue"
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: "/vertical-plus-horizontal-line",
     name: "4. Vertical + Horizontal line",
     component: VerticalPlusHorizontalLine,
+  },
+  {
+    path: "/teken-functie",
+    name: "5. Teken functie",
+    component: TekenFunctie,
   },
   
 ];
