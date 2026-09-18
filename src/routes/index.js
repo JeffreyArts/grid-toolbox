@@ -7,6 +7,7 @@ import VerticalLine from "./pages/vertical-line.vue";
 import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.vue"
 import TekenFunctie from "./pages/teken-functie.vue"
 import xOffset from "./pages/x-offset.vue"
+import DoubleOffset from "./pages/double-offset.vue"
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: "/x-offset",
     name: "6. X Offset",
     component: xOffset,
+  },
+  {
+    path: "/double-offset",
+    name: "7. Double Offset",
+    component: DoubleOffset,
   },
   
 ];
