@@ -8,6 +8,7 @@ import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.v
 import TekenFunctie from "./pages/teken-functie.vue"
 import xOffset from "./pages/x-offset.vue"
 import DoubleOffset from "./pages/double-offset.vue"
+import CellSize from "./pages/cell-size.vue"
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: "/double-offset",
     name: "7. Double Offset",
     component: DoubleOffset,
+  },
+  {
+    path: "/cell-size",
+    name: "8. Cell size",
+    component: CellSize,
   },
   
 ];
