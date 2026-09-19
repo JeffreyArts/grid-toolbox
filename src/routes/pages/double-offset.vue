@@ -20,12 +20,11 @@
                 <div class="option-group" name="Selectables">
 
                     <div class="option">
-                        <label for="range">
-                            Radius
+                        <label for="diameter">
+                            Cell diameter
                         </label>
-                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.radius">
-                        <!-- optional number display-->
-                        <input type="number"  min="8" max="64" v-model.number="options.radius">
+                        <input type="range" id="diameter" min="1" max="480" step="1" v-model.number="options.diameter">
+                        <input type="number"  min="1" max="480" v-model.number="options.diameter">
                     </div>
 
                     <div class="option">
@@ -62,7 +61,7 @@
                         <select name="shape" v-model="options.shape">
                             <option value="circle"> Circle </option>
                             <option value="square"> Square </option>
-                            <option value="cross"> Cross </option>
+                            <option value="plus"> Plus </option>
                             <option value="triangle"> Triangle </option>
                         </select>
                     </div>
@@ -88,8 +87,10 @@ const codeSnippet =
 // Belangrijke defaults (check eerdere pagina's voor details)
 // ...
 
-const hasXOffset = true
+const hasXOffset = false
 const hasYOffset = false
+const diameter = 32
+const radius = diameter/2
 
 
 /*******
@@ -128,10 +129,10 @@ const hasYOffset = false
         
         // Pas x en/of y positie aan indien nodig
         if (!isEvenY && hasXOffset) {
-            finalX = x + diameter /2
+            finalX = x - radius
         }
         if (!isEvenX && hasYOffset) {
-            finalY = y + diameter /2
+            finalY = y - radius
         }   
         
         // Teken de vorm
@@ -158,7 +159,7 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                radius: 32,
+                diameter: 32,
                 shape: "circle",
                 xOffset: false,
                 yOffset: false,
@@ -167,14 +168,15 @@ export default {
         }
     },
     watch: {
-        "options.radius": {
-            handler(v) {
+        "options.diameter": {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const diameter = ${oldValue}`,`const diameter = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
-                return parseFloat(v)
+                return parseFloat(value)
             },
             immediate: true
         },
@@ -186,14 +188,17 @@ export default {
             }
         },
         "options.xOffset": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const hasXOffset = ${oldValue}`,`const hasXOffset = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 }
             }
         },
         "options.yOffset": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const hasYOffset = ${oldValue}`,`const hasYOffset = ${value}`)
+                
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 }
@@ -240,8 +245,8 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de cirkels
-            const radius = this.options.radius
-            const diameter = this.options.radius * 2
+            const diameter = this.options.diameter
+            const radius = diameter/2
             
             console.log(this.options)
             
@@ -254,10 +259,10 @@ export default {
                     let finalY = y
 
                     if (!isEvenY && this.options.xOffset) {
-                        finalX = x + diameter /2
+                        finalX = x - radius
                     }
                     if (!isEvenX && this.options.yOffset) {
-                        finalY = y + diameter /2
+                        finalY = y - radius
                     }
 
                     this.drawShape(finalX, finalY, diameter)
@@ -282,11 +287,13 @@ export default {
                 // dan plakken ze allemaal aan elkaar en kunnen we ze niet zien
                 // de -2 is dus eigenlijk een soort van marge tussen de vierkanten
                 ctx.rect(x, y, diameter - 2, diameter - 2) 
-            } else if (this.options.shape == "cross") {
+            } else if (this.options.shape == "plus") {
+                const width = diameter
+                const height = diameter
                 // Horizontale lijn
-                ctx.rect(x, y, diameter, diameter / 10)
+                ctx.rect(x - width/2, y - height / 20, width, height / 10)
                 // Verticale lijn
-                ctx.rect(x, y, diameter / 10, diameter)
+                ctx.rect(x - width/20, y - height/2, width / 10, height)
             } else if (this.options.shape == "triangle") {
                 // Bepaal startpunt van de driehoek
                 ctx.moveTo(x - diameter/2, y + diameter/2)

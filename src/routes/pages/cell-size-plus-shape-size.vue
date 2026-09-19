@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Cell Size</h1>
+            <h1>Cell Size + Shape Size</h1>
             <hr>
         </header>
 
@@ -35,6 +35,14 @@
                         <input type="range" id="cellHeight" min="1" max="360" step="1" v-model.number="options.cellHeight">
                         <!-- optional number display-->
                         <input type="number"  min="8" max="64" v-model.number="options.cellHeight">
+                    </div>
+                    <div class="option">
+                        <label for="shapeDiameter">
+                            Shape size
+                        </label>
+                        <input type="range" id="shapeDiameter" min="1" max="360" step="1" v-model.number="options.shapeDiameter">
+                        <!-- optional number display-->
+                        <input type="number"  min="8" max="64" v-model.number="options.shapeDiameter">
                     </div>
 
                     <div class="option">
@@ -104,6 +112,7 @@ const codeSnippet =
  * naar een cellWidth & cellHeight. Zo kunnen we de breedte
  * en hoogte van iedere cell apart aanpassen.
  *******/
+const shapeDiameter = 40
 const cellWidth = 40
 const cellHeight = 80
 const hasXOffset = false
@@ -120,10 +129,10 @@ for (let x = 0; x < this.canvas.width + cellWidth; x+= cellWidth) {
         let finalY = y
         
         if (!isEvenY && hasXOffset) {
-            finalX = x - cellWidth /2
+            finalX = x + cellWidth /2
         }
         if (!isEvenX && hasYOffset) {
-            finalY = y - cellHeight /2
+            finalY = y + cellHeight /2
         }
                 
         ctx.beginPath()
@@ -154,6 +163,7 @@ export default {
                 cellWidth: 40,
                 cellHeight: 80,
                 shape: "circle",
+                shapeDiameter: 40,
                 xOffset: false,
                 yOffset: false,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
@@ -183,6 +193,11 @@ export default {
         "options.cellHeight": {
             handler(value, oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const cellHeight = ${oldValue}`,`const cellHeight = ${value}`)
+            },
+        },
+        "options.shapeDiameter": {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const shapeDiameter = ${oldValue}`,`const shapeDiameter = ${value}`)
             },
         },
         "options.xOffset": {
@@ -240,13 +255,13 @@ export default {
                     let finalY = y
 
                     if (!isEvenY && this.options.xOffset) {
-                        finalX = x - cellWidth /2
+                        finalX = x + cellWidth /2
                     }
                     if (!isEvenX && this.options.yOffset) {
-                        finalY = y - cellHeight /2
+                        finalY = y + cellHeight /2
                     }
 
-                    this.drawShape(finalX, finalY, cellWidth, cellHeight)
+                    this.drawShape(finalX, finalY, this.options.shapeDiameter, this.options.shapeDiameter)
 
                     ctx.fill()
                 }
@@ -263,9 +278,7 @@ export default {
                 ctx.ellipse(x, y, width/2, height/2, 0, 0, Math.PI * 2)
             } else if (this.options.shape == "square") {
                 ctx.rect(x, y, width - 2, height - 2) 
-            }  else if (this.options.shape == "plus") {
-                const width = diameter
-                const height = diameter
+            } else if (this.options.shape == "plus") {
                 // Horizontale lijn
                 ctx.rect(x - width/2, y - height / 20, width, height / 10)
                 // Verticale lijn

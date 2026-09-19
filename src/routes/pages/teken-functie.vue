@@ -20,12 +20,12 @@
                 <div class="option-group" name="Selectables">
 
                     <div class="option">
-                        <label for="range">
-                            Range input
+                        <label for="diameter">
+                            Shape diameter
                         </label>
-                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.radius">
+                        <input type="range" id="diameter" min="1" max="360" step="1" v-model.number="options.diameter">
                         <!-- optional number display-->
-                        <input type="number"  min="8" max="64" v-model.number="options.radius">
+                        <input type="number"  min="8" max="64" v-model.number="options.diameter">
                     </div>
                     
 
@@ -36,7 +36,7 @@
                         <select name="shape" v-model="options.shape">
                             <option value="circle"> Circle </option>
                             <option value="square"> Square </option>
-                            <option value="cross"> Cross </option>
+                            <option value="plus"> Plus </option>
                             <option value="triangle"> Triangle </option>
                         </select>
                     </div>
@@ -61,7 +61,8 @@ const codeSnippet =
 `
 // Belangrijke defaults (check eerdere pagina's voor details)
 // ...
-let shape = "circle"        
+const shape = "circle"        
+const diameter = 32
 
 const drawShape = (x, y, diameter) {
 
@@ -71,7 +72,7 @@ const drawShape = (x, y, diameter) {
 
         ctx.ellipse(x, y, radius, radius, 0, 0, Math.PI * 2)
         
-    } else if (this.options.shape == "square") {
+    } else if (shape == "square") {
         const size = diameter -2
         // Als we de vierkanten even groot maken als de diameter 
         // dan plakken ze allemaal aan elkaar en kunnen we ze niet zien
@@ -79,17 +80,17 @@ const drawShape = (x, y, diameter) {
 
         ctx.rect(x, y, size, size) 
 
-    } else if (this.options.shape == "cross") {
+    } else if (shape == "plus") {
 
         const thickness = diameter/10
 
         // Horizontale lijn
-        ctx.rect(x, y, diameter, thickness)
+        ctx.rect(x - width/2, y - thickness/2, diameter, thickness)
 
         // Verticale lijn
-        ctx.rect(x, y, thickness, diameter)
+        ctx.rect(x-thickness/2, y-height/2, thickness, diameter)
 
-    } else if (this.options.shape == "triangle") {
+    } else if (shape == "triangle") {
 
         // Bepaal startpunt van de driehoek (links-onder)
         ctx.moveTo(x - diameter/2, y + diameter/2)
@@ -129,26 +130,28 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                radius: 32,
+                diameter: 32,
                 shape: "circle",
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     watch: {
-        "options.radius": {
-            handler(v) {
+        "options.diameter": {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const diameter = ${oldValue}`,`const diameter = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
-                return parseFloat(v)
+                return parseFloat(value)
             },
             immediate: true
         },
         "options.shape": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const shape = "${oldValue}"`,`const shape = "${value}"`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 }
@@ -195,8 +198,8 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de cirkels
-            const radius = this.options.radius
-            const diameter = this.options.radius * 2
+            const diameter = this.options.diameter
+            const radius = diameter/2
             
             // For-lus voor het aanpassen van de x-positie
             for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
@@ -224,11 +227,13 @@ export default {
                 // dan plakken ze allemaal aan elkaar en kunnen we ze niet zien
                 // de -2 is dus eigenlijk een soort van marge tussen de vierkanten
                 ctx.rect(x, y, diameter - 2, diameter - 2) 
-            } else if (this.options.shape == "cross") {
+            } else if (this.options.shape == "plus") {
+                const width = diameter
+                const height = diameter
                 // Horizontale lijn
-                ctx.rect(x, y, diameter, diameter / 10)
+                ctx.rect(x - width/2, y - height / 20, width, height / 10)
                 // Verticale lijn
-                ctx.rect(x, y, diameter / 10, diameter)
+                ctx.rect(x - width/20, y - height/2, width / 10, height)
             } else if (this.options.shape == "triangle") {
                 // Bepaal startpunt van de driehoek
                 ctx.moveTo(x - diameter/2, y + diameter/2)

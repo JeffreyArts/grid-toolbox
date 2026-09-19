@@ -20,12 +20,11 @@
                 <div class="option-group" name="Selectables">
 
                     <div class="option">
-                        <label for="range">
-                            Radius
+                        <label for="diameter">
+                            Cell diameter
                         </label>
-                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.radius">
-                        <!-- optional number display-->
-                        <input type="number"  min="8" max="64" v-model.number="options.radius">
+                        <input type="range" id="diameter" min="1" max="480" step="1" v-model.number="options.diameter">
+                        <input type="number"  min="1" max="480" v-model.number="options.diameter">
                     </div>
 
                     <div class="option">
@@ -49,7 +48,7 @@
                         <select name="shape" v-model="options.shape">
                             <option value="circle"> Circle </option>
                             <option value="square"> Square </option>
-                            <option value="cross"> Cross </option>
+                            <option value="plus"> Plus </option>
                             <option value="triangle"> Triangle </option>
                         </select>
                     </div>
@@ -74,22 +73,27 @@ const codeSnippet =
 `
 // Belangrijke defaults (check eerdere pagina's voor details)
 // ...
+ 
+const diameter = 32
+const hasXOffset = true
+const shape = "circle"
+const radius = diameter/2
 
 for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
     for (let y = 0; y < this.canvas.height + diameter; y+= diameter) {
         ctx.beginPath()
 
         // Check of het een even rij is
-        const isEven = y/diameter % 2
+        const isEven = (y/diameter) % 2
 
         // Als het een oneven rij is, dan teken pas je de x positie iets naar links aan
-        if (!isEven) {
-            this.drawShape(x+ diameter/2,y,diameter)
+        if (!isEven && hasXOffset) {
+            this.drawShape(x - radius, y, diameter)
             continue;
         } 
 
         // Als het een even rij is, dan teken je hem gewoon normaal
-        this.drawShape(x,y,diameter)
+        this.drawShape(x, y, diameter)
     }
 }          
 
@@ -111,7 +115,7 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                radius: 32,
+                diameter: 32,
                 shape: "circle",
                 xOffset: true,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
@@ -119,26 +123,29 @@ export default {
         }
     },
     watch: {
-        "options.radius": {
-            handler(v) {
+        "options.diameter": {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const diameter = ${oldValue}`,`const diameter = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
-                return parseFloat(v)
+                return parseFloat(value)
             },
             immediate: true
         },
         "options.shape": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const shape = "${oldValue}"`,`const shape = "${value}"`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 }
             }
         },
         "options.xOffset": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const hasXOffset = ${oldValue}`,`const hasXOffset = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 }
@@ -185,8 +192,8 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de cirkels
-            const radius = this.options.radius
-            const diameter = this.options.radius * 2
+            const diameter = this.options.diameter
+            const radius = diameter/2
             
             
             for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
@@ -196,9 +203,9 @@ export default {
                     const isEven = y/diameter % 2
 
                     if (isEven && this.options.xOffset) {
-                        this.drawShape(x,y,diameter)
+                        this.drawShape(x, y, diameter)
                     } else {
-                        this.drawShape(x+ diameter/2,y,diameter)
+                        this.drawShape(x - radius, y, diameter)
                     }
 
                     ctx.fill()
@@ -221,11 +228,14 @@ export default {
                 // dan plakken ze allemaal aan elkaar en kunnen we ze niet zien
                 // de -2 is dus eigenlijk een soort van marge tussen de vierkanten
                 ctx.rect(x, y, diameter - 2, diameter - 2) 
-            } else if (this.options.shape == "cross") {
+            } else if (this.options.shape == "plus") {
+                const width = diameter
+                const height = diameter
+
                 // Horizontale lijn
-                ctx.rect(x, y, diameter, diameter / 10)
+                ctx.rect(x - width/2, y - height / 20, width, height / 10)
                 // Verticale lijn
-                ctx.rect(x, y, diameter / 10, diameter)
+                ctx.rect(x - width/20, y - height/2, width / 10, height)
             } else if (this.options.shape == "triangle") {
                 // Bepaal startpunt van de driehoek
                 ctx.moveTo(x - diameter/2, y + diameter/2)

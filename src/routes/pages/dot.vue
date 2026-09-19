@@ -21,11 +21,11 @@
 
                     <div class="option">
                         <label for="range">
-                            Dot size
+                            Dot diameter
                         </label>
-                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.dotSize">
+                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.dotDiameter">
                         <!-- optional number display-->
-                        <input type="number"  min="8" max="64" v-model.number="options.dotSize">
+                        <input type="number"  min="8" max="64" v-model.number="options.dotDiameter">
                     </div>
 
                     <div class="option">
@@ -48,7 +48,7 @@
 const codeSnippet = 
 `
 // Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
-ctx.fillStyle = "RebeccaPurple";
+ctx.fillStyle = "#f93e3e";
 
 // Zeg eerst dat je een nieuwe lijn wilt gaan beginnen
 ctx.beginPath()
@@ -58,8 +58,8 @@ ctx.beginPath()
 ctx.ellipse( 
     canvas.width/2,
     canvas.height/2,
-    dotSize,
-    dotSize,
+    dotDiameter,
+    dotDiameter,
     0,
     0,
     Math.PI * 2
@@ -83,13 +83,13 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                dotSize: 32,
+                dotDiameter: 32,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     watch: {
-        "options.dotSize": {
+        "options.dotDiameter": {
             handler(v) {
                 if (this.canvas.ctx) {
                     this.updateCanvas()
@@ -103,6 +103,9 @@ export default {
         "options.color": {
             handler(v) {
                 document.documentElement.style.setProperty("--accentColor", v)
+                const regex = /(ctx\.fillStyle\s*=\s*["'])#[0-9a-fA-F]{3,8}(["'])/g;
+                this.codeSnippet = this.codeSnippet.replace(regex,`$1${v}$2`)
+                
                 this.updateCanvas()
                 return parseFloat(v)
             },
@@ -140,11 +143,11 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de cirkels
-            const dotSize = this.options.dotSize
+            const dotDiameter = this.options.dotDiameter
             
             
             ctx.beginPath()
-            ctx.ellipse( this.canvas.width/2 , this.canvas.height/2, dotSize, dotSize, 0, 0, Math.PI * 2)
+            ctx.ellipse( this.canvas.width/2 , this.canvas.height/2, dotDiameter, dotDiameter, 0, 0, Math.PI * 2)
             ctx.fill()
             
 

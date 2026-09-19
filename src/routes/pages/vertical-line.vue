@@ -21,11 +21,11 @@
 
                     <div class="option">
                         <label for="range">
-                            Step size
+                            Dot diameter
                         </label>
-                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.stepSize">
+                        <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.diameter">
                         <!-- optional number display-->
-                        <input type="number"  min="8" max="64" v-model.number="options.stepSize">
+                        <input type="number"  min="1" max="360" v-model.number="options.diameter">
                     </div>
                     
 
@@ -61,11 +61,11 @@
 const codeSnippet = 
 `
 // Belangrijke defaults (check horizontal-line voor details)
-ctx.fillStyle = "RebeccaPurple";
+ctx.fillStyle = "#f00";
 ctx.beginPath()
-const radius = 40
-const diameter = size*2 // De "breedte"/"hoogte" van de cirkel
-let skipDot = false
+const diameter = 40
+const radius = diameter/2 // De "breedte"/"hoogte" van een individuele stip
+const skipDot = false
 
 // De x-positie van alle cirkels moet in het midden van het canvas komen
 const x = canvas.width / 2
@@ -104,40 +104,44 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                stepSize: 32,
+                diameter: 40,
                 skipDot: false,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     watch: {
-        "options.stepSize": {
-            handler(v) {
+        "options.diameter": {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const diameter = ${oldValue}`,`const diameter = ${value}`)
+
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
-                return parseFloat(v)
+                return parseFloat(value)
             },
             immediate: true
         },
         "options.color": {
             handler(v) {
                 document.documentElement.style.setProperty("--accentColor", v)
+                const regex = /(ctx\.fillStyle\s*=\s*["'])#[0-9a-fA-F]{3,8}(["'])/g;
+                this.codeSnippet = this.codeSnippet.replace(regex,`$1${v}$2`)
                 this.updateCanvas()
                 return parseFloat(v)
             },
             immediate: true
         },
         "options.skipDot": {
-            handler(v) {
+            handler(value, oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const skipDot = ${oldValue}`,`const skipDot = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
                     setTimeout(this.updateCanvas)
                 }
-                return parseFloat(v)
             },
             immediate: true
         }
@@ -159,40 +163,6 @@ export default {
             canvas.height = this.canvas.height
 
         },
-        drawHorizontalLine(y) {
-
-            const ctx = this.canvas.ctx
-            if (!ctx) {
-                console.error("Can not find canvas context")
-                return 
-            }
-
-            // Maak het canvas schoon
-            ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
-
-            // Bepaal de kleur van de stippen
-            const color = this.options.color  
-            ctx.fillStyle = color;
-            
-            // Bepaal het formaat van de cirkels
-            const stepSize = this.options.stepSize
-            
-            // For-lus voor het aanpassen van de x-positie
-            for (let x = 0; x < this.canvas.width + stepSize*2; x+=stepSize*2) {
-
-                // Alle even stippen moeten worden overgeslagen wanneer skipDot == true
-                // console.log(x, x/stepSize/2, x/stepSize/2 % 2)
-                if (this.options.skipDot && x/stepSize/2 % 2) {
-                    continue;
-                }
-
-                // Teken de stip, het optellen van de y positie met stepSize/2 zorgt ervoor dat de stip vanuit het midden wordt getekend
-                ctx.beginPath()
-                ctx.ellipse( x , y + stepSize/2, stepSize, stepSize, 0, 0, Math.PI * 2)
-                ctx.fill()
-            }            
-
-        },
         drawVerticallLine(x) {
             const ctx = this.canvas.ctx
             if (!ctx) {
@@ -208,26 +178,27 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de cirkels
-            const stepSize = this.options.stepSize
+            const diameter = this.options.diameter
+            const radius = diameter / 2
             
             // For-lus voor het aanpassen van de x-positie
-            for (let y = 0; y < this.canvas.width + stepSize*2; y+=stepSize*2) {
+            for (let y = 0; y < this.canvas.width + diameter; y+=diameter) {
 
                 // Alle even stippen moeten worden overgeslagen wanneer skipDot == true
-                // console.log(x, x/stepSize/2, x/stepSize/2 % 2)
-                if (this.options.skipDot && y/stepSize/2 % 2) {
+                // console.log(x, x/diameter/2, x/diameter/2 % 2)
+                if (this.options.skipDot && (y/diameter)  % 2) {
                     continue;
                 }
 
-                // Teken de stip, het optellen van de y positie met stepSize/2 zorgt ervoor dat de stip vanuit het midden wordt getekend
+                // Teken de stip, het optellen van de y positie met diameter/2 zorgt ervoor dat de stip vanuit het midden wordt getekend
                 ctx.beginPath()
-                ctx.ellipse( x , y + stepSize/2, stepSize, stepSize, 0, 0, Math.PI * 2)
+                ctx.ellipse( x , y - radius, radius, radius, 0, 0, Math.PI * 2)
                 ctx.fill()
             }            
 
         },
         updateCanvas() {
-            this.drawVerticallLine(this.canvas.width/2 - this.options.stepSize/2)
+            this.drawVerticallLine(this.canvas.width/2)
         },
         drawBackgroundColor(color) {
             const ctx = this.canvas.ctx
