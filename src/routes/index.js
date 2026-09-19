@@ -11,69 +11,74 @@ import DoubleOffset from "./pages/double-offset.vue"
 import CellSize from "./pages/cell-size.vue"
 import CellSizePlusShapeSize from "./pages/cell-size-plus-shape-size.vue"
 import CellImage from "./pages/cell-image.vue"
+import CanvasImage from "./pages/canvas-image.vue"
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/options-overview",
-    name: "Options overview",
-    component: OptionsOverview,
-  },
-  {
-    path: "/dot",
-    name: "1. Dot",
-    component: Dot,
-  },
-  {
-    path: "/horizontal-line",
-    name: "2. Horizontal line",
-    component: HorizontalLine,
-  },
-  {
-    path: "/vertical-line",
-    name: "3. Vertical line",
-    component: VerticalLine,
-  },
-  {
-    path: "/vertical-plus-horizontal-line",
-    name: "4. Vertical + Horizontal line",
-    component: VerticalPlusHorizontalLine,
-  },
-  {
-    path: "/teken-functie",
-    name: "5. Teken functie",
-    component: TekenFunctie,
-  },
-  {
-    path: "/x-offset",
-    name: "6. X Offset",
-    component: xOffset,
-  },
-  {
-    path: "/double-offset",
-    name: "7. Double Offset",
-    component: DoubleOffset,
-  },
-  {
-    path: "/cell-size",
-    name: "8. Cell size",
-    component: CellSize,
-  },
-  {
-    path: "/cell-size-plus-shape-size",
-    name: "9. Cell size + Shape size",
-    component: CellSizePlusShapeSize,
-  },
-  {
-    path: "/cell-image",
-    name: "10. Cell Image",
-    component: CellImage,
-  },
-  
+const routes = [{
+        path: "/",
+        name: "Home",
+        component: Home,
+    },
+    {
+        path: "/options-overview",
+        name: "Options overview",
+        component: OptionsOverview,
+    },
+    {
+        path: "/dot",
+        name: "1. Dot",
+        component: Dot,
+    },
+    {
+        path: "/horizontal-line",
+        name: "2. Horizontal line",
+        component: HorizontalLine,
+    },
+    {
+        path: "/vertical-line",
+        name: "3. Vertical line",
+        component: VerticalLine,
+    },
+    {
+        path: "/vertical-plus-horizontal-line",
+        name: "4. Vertical + Horizontal line",
+        component: VerticalPlusHorizontalLine,
+    },
+    {
+        path: "/teken-functie",
+        name: "5. Teken functie",
+        component: TekenFunctie,
+    },
+    {
+        path: "/x-offset",
+        name: "6. X Offset",
+        component: xOffset,
+    },
+    {
+        path: "/double-offset",
+        name: "7. Double Offset",
+        component: DoubleOffset,
+    },
+    {
+        path: "/cell-size",
+        name: "8. Cell size",
+        component: CellSize,
+    },
+    {
+        path: "/cell-size-plus-shape-size",
+        name: "9. Cell size + Shape size",
+        component: CellSizePlusShapeSize,
+    },
+    {
+        path: "/cell-image",
+        name: "10. Cell Image",
+        component: CellImage,
+    },
+    {
+        path: "/canvas-image",
+        name: "11. Canvas Image",
+        component: CanvasImage,
+    },
+
 ];
 
 
@@ -83,4 +88,3 @@ const router = createRouter({
 });
 
 export default router;
-
