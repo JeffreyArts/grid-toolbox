@@ -10,6 +10,7 @@ import xOffset from "./pages/x-offset.vue"
 import DoubleOffset from "./pages/double-offset.vue"
 import CellSize from "./pages/cell-size.vue"
 import CellSizePlusShapeSize from "./pages/cell-size-plus-shape-size.vue"
+import CellImage from "./pages/cell-image.vue"
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
     path: "/cell-size-plus-shape-size",
     name: "9. Cell size + Shape size",
     component: CellSizePlusShapeSize,
+  },
+  {
+    path: "/cell-image",
+    name: "10. Cell Image",
+    component: CellImage,
   },
   
 ];
