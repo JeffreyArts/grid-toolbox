@@ -198,6 +198,11 @@ export default {
 
         },
         updateCanvas() {
+            // Als de diameter 0 is, dan updaten we de lijn niet. 
+            // Dan komt de tekenlus namelijk in een infinite loop.
+            if (!this.options.diameter) {
+                return
+            }
             this.drawVerticallLine(this.canvas.width/2)
         },
         drawBackgroundColor(color) {

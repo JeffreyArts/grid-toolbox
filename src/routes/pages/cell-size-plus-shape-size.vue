@@ -291,6 +291,11 @@ export default {
             } 
         },
         updateCanvas() {
+            // Als cell height of width 0 is, dan updaten we het grid niet. 
+            // Dan komt de tekenlus namelijk in een infinite loop.
+            if (!this.options.cellHeight || !this.options.cellWidth) {
+                return
+            }
             this.drawGrid()
         },
         drawBackgroundColor(color) {

@@ -302,6 +302,11 @@ export default {
             } 
         },
         updateCanvas() {
+            // Als de diameter 0 is, dan updaten we het grid niet. 
+            // Dan komt de tekenlus namelijk in een infinite loop.
+            if (!this.options.diameter) {
+                return
+            }
             this.drawGrid()
         },
         drawBackgroundColor(color) {
