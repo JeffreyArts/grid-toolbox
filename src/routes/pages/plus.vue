@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Triangle</h1>
+            <h1>Plus</h1>
             <hr>
         </header>
 
@@ -12,7 +12,7 @@
             </div>
 
             <highlightjs language="js" :code="codeSnippet" />
-            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineTo">Details lineTo functie</a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rect">Details rect functie</a>
         </section>
 
         <aside class="sidebar">
@@ -21,19 +21,29 @@
 
                     <div class="option">
                         <label for="range">
-                            Triangle width
+                            Plus width
                         </label>
-                        <input type="range" min="8" max="960" step="1" v-model.number="options.triangleWidth">
+                        <input type="range" min="1" max="480" step="1" v-model.number="options.rectangleWidth">
                         <!-- optional number display-->
-                        <input type="number"  min="8" max="960" v-model.number="options.triangleWidth">
+                        <input type="number"  min="8" max="480" v-model.number="options.rectangleWidth">
                     </div>
                     <div class="option">
                         <label for="range">
-                            Triangle height
+                            Plus height
                         </label>
-                        <input type="range" min="8" max="960" step="1" v-model.number="options.triangleHeight">
+                        <input type="range" min="1" max="480" step="1" v-model.number="options.rectangleHeight">
                         <!-- optional number display-->
-                        <input type="number"  min="8" max="960" v-model.number="options.triangleHeight">
+                        <input type="number"  min="8" max="480" v-model.number="options.rectangleHeight">
+                    </div>
+                    <div class="option">
+                        <label for="range">
+                            Plus thickness
+                        </label>
+                        <input type="range" min="1" :max="Math.min(options.rectangleHeight, options.rectangleWidth)" step="1" v-model.number="options.rectangleThickness">
+                        <!-- optional number display-->
+                        <input type="number"  min="1" :max="Math.min(options.rectangleHeight, options.rectangleWidth)" v-model.number="options.rectangleThickness">
+
+                        {{ options.rectangleThickness }}
                     </div>
 
                     <div class="option">
@@ -59,21 +69,29 @@ const codeSnippet =
 ctx.fillStyle = "#f93e3e";
 const width = 100
 const height = 100
+const thickness = 16
 
-// De x & y positie beginnen in het midden van het scherm
-const x = this.canvas.width/2 
-const y = this.canvas.height/2
+// De x & y positie in de rect functie is het startpunt waar de width & height bij opgeteld worden
+const x = this.canvas.width/2 - width/2
+const y = this.canvas.height/2 - height/2
 
 // Zeg eerst dat je een nieuwe lijn wilt gaan beginnen
 ctx.beginPath()
 
-// Maak het canvas schoon
-ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+// Bepaal het formaat van de rechthoeken
+const width = this.options.rectangleWidth
+const height = this.options.rectangleHeight
+const thickness = this.options.rectangleThickness
 
-// Teken een lijn in de vorm van een driehoek
-ctx.moveTo(x - width/2, y + height/2)     // Punt linksonder
-ctx.lineTo(x, y - height/2)               // Punt midden boven
-ctx.lineTo(x + width/2, y + height/2)     // Punt rechtsonder
+// Horizontale lijn
+const x_hor = this.canvas.width/2 - width/2
+const y_hor = this.canvas.height/2 - thickness/2
+ctx.rect( x_hor, y_hor, width, thickness)
+
+// Verticale lijn
+const x_vert = this.canvas.width/2 - thickness/2
+const y_vert = this.canvas.height/2 - height/2
+ctx.rect( x_vert, y_vert, thickness, height)
 
 // Vul de lijn van de cirkel met de geselecteerde kleur 
 ctx.fill()
@@ -93,16 +111,19 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                triangleHeight: 100,
-                triangleWidth: 100,
+                rectangleHeight: 100,
+                rectangleWidth: 100,
+                rectangleThickness: 16,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     watch: {
-        "options.triangleHeight": {
+        "options.rectangleHeight": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const height = ${oldValue}`,`const height = ${value}`)
+                this.options.rectangleThickness = Math.min(this.options.rectangleHeight, this.options.rectangleThickness)
+
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
@@ -111,9 +132,22 @@ export default {
             },
             immediate: true
         },
-        "options.triangleWidth": {
+        "options.rectangleWidth": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const width = ${oldValue}`,`const width = ${value}`)
+                this.options.rectangleThickness = Math.min(this.options.rectangleWidth, this.options.rectangleThickness)
+
+                if (this.canvas.ctx) {
+                    this.updateCanvas()
+                } else {
+                    setTimeout(this.updateCanvas)
+                }
+            },
+            immediate: true
+        },
+        "options.rectangleThickness": {
+            handler(value,oldValue) {
+                this.codeSnippet = this.codeSnippet.replace(`const thickness = ${oldValue}`,`const thickness = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
@@ -150,7 +184,7 @@ export default {
             canvas.height = this.canvas.height
 
         },
-        drawRectangle() {
+        drawPlus() {
             const ctx = this.canvas.ctx
             if (!ctx) {
                 console.error("Can not find canvas context")
@@ -165,23 +199,26 @@ export default {
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de rechthoeken
-            const width = this.options.triangleWidth
-            const height = this.options.triangleHeight
-
-            // De x & y positie in de rect functie is het startpunt waar de width & height bij opgeteld worden
-            const x = this.canvas.width/2 
-            const y = this.canvas.height/2
+            const width = this.options.rectangleWidth
+            const height = this.options.rectangleHeight
+            const thickness = this.options.rectangleThickness
             
             ctx.beginPath()
-            ctx.moveTo(x - width/2, y + height/2)     // Punt linksonder
-            ctx.lineTo(x, y - height/2)               // Punt midden boven
-            ctx.lineTo(x + width/2, y + height/2)     // Punt rechtsonder
-            ctx.fill()
-            
 
+            // Horizontale lijn
+            const x_hor = this.canvas.width/2 - width/2
+            const y_hor = this.canvas.height/2 - thickness/2
+            ctx.rect( x_hor, y_hor, width, thickness)
+            
+            // Verticale lijn
+            const x_vert = this.canvas.width/2 - thickness/2
+            const y_vert = this.canvas.height/2 - height/2
+            ctx.rect( x_vert, y_vert, thickness, height)
+
+            ctx.fill()
         },
         updateCanvas() {
-            this.drawRectangle()
+            this.drawPlus()
         },
         drawBackgroundColor(color) {
             const ctx = this.canvas.ctx
