@@ -4,6 +4,7 @@ import OptionsOverview from "./pages/options-overview.vue";
 import Circle from "./pages/circle.vue";
 import Rectangle from "./pages/rectangle.vue";
 import Triangle from "./pages/triangle.vue";
+import Plus from "./pages/plus.vue";
 import HorizontalLine from "./pages/horizontal-line.vue";
 import VerticalLine from "./pages/vertical-line.vue";
 import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.vue"
@@ -48,6 +49,22 @@ const routes = [{
             group: "Shapes",
         },
         component: Triangle,
+    },
+    {
+        path: "/plus",
+        name: "4. Plus",
+        meta: {
+            group: "Shapes",
+        },
+        component: Plus,
+    },
+    {
+        path: "/canvas-image",
+        name: "5. Canvas Image",
+        component: CanvasImage,
+        meta: {
+            group: "Shapes",
+        },
     },
     {
         path: "/horizontal-line",
@@ -119,14 +136,6 @@ const routes = [{
         component: CellImage,
         meta: {
             group: "How to draw grid",
-        },
-    },
-    {
-        path: "/canvas-image",
-        name: "4. Canvas Image",
-        component: CanvasImage,
-        meta: {
-            group: "Shapes",
         },
     },
 
