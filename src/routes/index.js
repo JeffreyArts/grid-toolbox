@@ -1,7 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/home.vue";
 import OptionsOverview from "./pages/options-overview.vue";
-import Dot from "./pages/dot.vue";
+import Circle from "./pages/circle.vue";
+import Rectangle from "./pages/rectangle.vue";
+import Triangle from "./pages/triangle.vue";
 import HorizontalLine from "./pages/horizontal-line.vue";
 import VerticalLine from "./pages/vertical-line.vue";
 import VerticalPlusHorizontalLine from "./pages/vertical-plus-horizontal-lines.vue"
@@ -24,59 +26,108 @@ const routes = [{
         component: OptionsOverview,
     },
     {
-        path: "/dot",
-        name: "1. Dot",
-        component: Dot,
+        path: "/circle",
+        name: "1. Circle",
+        meta: {
+            group: "Shapes",
+        },
+        component: Circle,
+    },
+    {
+        path: "/rectangle",
+        name: "2. Rectangle",
+        meta: {
+            group: "Shapes",
+        },
+        component: Rectangle,
+    },
+    {
+        path: "/triangle",
+        name: "3. Triangle",
+        meta: {
+            group: "Shapes",
+        },
+        component: Triangle,
     },
     {
         path: "/horizontal-line",
-        name: "2. Horizontal line",
+        name: "1. Horizontal line",
         component: HorizontalLine,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/vertical-line",
-        name: "3. Vertical line",
+        name: "2. Vertical line",
         component: VerticalLine,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/vertical-plus-horizontal-line",
-        name: "4. Vertical + Horizontal line",
+        name: "3. Vertical + Horizontal line",
         component: VerticalPlusHorizontalLine,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/teken-functie",
-        name: "5. Teken functie",
+        name: "4. Teken functie",
         component: TekenFunctie,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/x-offset",
-        name: "6. X Offset",
+        name: "5. X Offset",
         component: xOffset,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/double-offset",
-        name: "7. Double Offset",
+        name: "6. Double Offset",
         component: DoubleOffset,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/cell-size",
-        name: "8. Cell size",
+        name: "7. Cell size",
         component: CellSize,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/cell-size-plus-shape-size",
-        name: "9. Cell size + Shape size",
+        name: "8. Cell size + Shape size",
         component: CellSizePlusShapeSize,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/cell-image",
-        name: "10. Cell Image",
+        name: "9. Cell Image",
         component: CellImage,
+        meta: {
+            group: "How to draw grid",
+        },
     },
     {
         path: "/canvas-image",
-        name: "11. Canvas Image",
+        name: "4. Canvas Image",
         component: CanvasImage,
+        meta: {
+            group: "Shapes",
+        },
     },
 
 ];

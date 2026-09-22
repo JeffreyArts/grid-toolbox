@@ -5,7 +5,16 @@
             <router-link to="/" class="site-menu-title">Grid Toolbox</router-link>
 
             <div class="site-menu-list">
-                <router-link :to="route.path" class="site-menu-list-item" v-for="route in routes" :class="[currentRoute.name == route.name ? '__isCurrent' : '']">{{route.name}}</router-link>
+                <div class="site-menu-group" v-for="(groupRoutes, groupName) in groupedRoutes" :key="groupName">
+                    <h2 class="site-menu-group-title">{{groupName}}</h2>
+                    <router-link
+                        v-for="route in groupRoutes"
+                        :key="route.path"
+                        :to="route.path"
+                        class="site-menu-list-item"
+                        :class="[currentRoute.name == route.name ? '__isCurrent' : '']"
+                    >{{route.name}}</router-link>
+                </div>
             </div>
         </div>
 
@@ -21,11 +30,16 @@ export default {
     props: [],
     data() {
         return {
-            isOpen: false,
-            showToggle: true,
+            isOpen: true,
+            showToggle: false,
             routes: [],
             currentRoute:{},
             bodyElement: document.querySelector("body")
+        }
+    },
+    computed: {
+        groupedRoutes() {
+            return _.groupBy(this.routes, route => route.meta.group || "Other");
         }
     },
     methods: {

@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Dot</h1>
+            <h1>Circle</h1>
             <hr>
         </header>
 
@@ -21,7 +21,7 @@
 
                     <div class="option">
                         <label for="range">
-                            Dot diameter
+                            Circle diameter
                         </label>
                         <input type="range" id="range" min="1" max="360" step="1" v-model.number="options.dotDiameter">
                         <!-- optional number display-->
