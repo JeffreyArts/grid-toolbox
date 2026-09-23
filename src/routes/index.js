@@ -18,6 +18,8 @@ import CellImage from "./pages/cell-image.vue"
 import CanvasImage from "./pages/canvas-image.vue"
 import Polygon from "./pages/polygon.vue";
 import Layers from "./pages/layers.vue";
+import LayersWithColor from "./pages/layers-with-color.vue";
+import LayersWithMultipleProperties from "./pages/layers-with-multiple-properties.vue";
 
 const routes = [{
         path: "/",
@@ -161,6 +163,22 @@ const routes = [{
         path: "/layers",
         name: "Layers",
         component: Layers,
+        meta: {
+            group: "Drawing techniques",
+        },
+    },
+    {
+        path: "/layers-with-color",
+        name: "Layers with color property",
+        component: LayersWithColor,
+        meta: {
+            group: "Drawing techniques",
+        },
+    },
+    {
+        path: "/layers-with-multiple-properties",
+        name: "Layers with multiple properties",
+        component: LayersWithMultipleProperties,
         meta: {
             group: "Drawing techniques",
         },
