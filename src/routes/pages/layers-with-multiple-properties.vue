@@ -158,7 +158,7 @@ const layer1 = {
 const layer2 = {
     show: true,
     color: "#9b21c0",
-    diameter: 960
+    diameter: 480
 }
 
 const layer3 = {
@@ -304,7 +304,7 @@ export default {
                 layer2: {
                     show: true,
                     color: "#00ff99",
-                    diameter: 960,
+                    diameter: 480,
                 },
                 layer3: {
                     show: true,

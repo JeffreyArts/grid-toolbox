@@ -20,6 +20,7 @@ import Polygon from "./pages/polygon.vue";
 import Layers from "./pages/layers.vue";
 import LayersWithColor from "./pages/layers-with-color.vue";
 import LayersWithMultipleProperties from "./pages/layers-with-multiple-properties.vue";
+import LayersViaArray from "./pages/layers-via-array.vue";
 
 const routes = [{
         path: "/",
@@ -179,6 +180,14 @@ const routes = [{
         path: "/layers-with-multiple-properties",
         name: "Layers with multiple properties",
         component: LayersWithMultipleProperties,
+        meta: {
+            group: "Drawing techniques",
+        },
+    },
+    {
+        path: "/layers-via-array",
+        name: "Layers via array",
+        component: LayersViaArray,
         meta: {
             group: "Drawing techniques",
         },
