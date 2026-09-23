@@ -59,8 +59,10 @@
 <script>
 const codeSnippet = 
 `
-// Belangrijke defaults (check eerdere pagina's voor details)
-// ...
+// Haal canvas element op en haal de context hiervan op
+const canvas = getElementById("canvas")
+const ctx = this.canvas.el.getContext("2d");
+
 const shape = "circle"        
 const diameter = 32
 

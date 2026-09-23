@@ -55,6 +55,10 @@
 
 const codeSnippet = 
 `
+// Haal canvas element op en haal de context hiervan op
+const canvas = getElementById("canvas")
+const ctx = this.canvas.el.getContext("2d");
+
 // Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
 ctx.fillStyle = "#f93e3e";
 const width = 100

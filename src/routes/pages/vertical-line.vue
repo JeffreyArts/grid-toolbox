@@ -60,9 +60,13 @@
 <script>
 const codeSnippet = 
 `
-// Belangrijke defaults (check horizontal-line voor details)
+// Haal canvas element op en haal de context hiervan op
+const canvas = getElementById("canvas")
+const ctx = this.canvas.el.getContext("2d");
+
 ctx.fillStyle = "#f00";
 ctx.beginPath()
+
 const diameter = 40
 const radius = diameter/2 // De "breedte"/"hoogte" van een individuele stip
 const skipDot = false
