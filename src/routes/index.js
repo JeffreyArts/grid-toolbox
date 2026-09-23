@@ -17,6 +17,7 @@ import CellSizePlusShapeSize from "./pages/cell-size-plus-shape-size.vue"
 import CellImage from "./pages/cell-image.vue"
 import CanvasImage from "./pages/canvas-image.vue"
 import Polygon from "./pages/polygon.vue";
+import Layers from "./pages/layers.vue";
 
 const routes = [{
         path: "/",
@@ -154,6 +155,14 @@ const routes = [{
         component: CellImage,
         meta: {
             group: "How to draw a grid",
+        },
+    },
+    {
+        path: "/layers",
+        name: "Layers",
+        component: Layers,
+        meta: {
+            group: "Drawing techniques",
         },
     },
 
