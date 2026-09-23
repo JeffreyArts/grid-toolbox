@@ -150,20 +150,20 @@ const ctx = this.canvas.el.getContext("2d");
 
 const layer1 = {
     show: true,
-    color: "#ff0099",
+    color: "#9b21c0",
     amountOfSquares: 2,
     size: 100
 }
 
 const layer2 = {
     show: true,
-    color: "#ff0099",
+    color: "#9b21c0",
     diameter: 960
 }
 
 const layer3 = {
     show: true,
-    color: "#ff0099",
+    color: "#9b21c0",
     position: "tl"
 }
 
@@ -303,12 +303,12 @@ export default {
                 },
                 layer2: {
                     show: true,
-                    color: "#ff0099",
+                    color: "#00ff99",
                     diameter: 960,
                 },
                 layer3: {
                     show: true,
-                    color: "#ff0099",
+                    color: "#9900ff",
                     position: "tl"
                 },
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                

@@ -203,7 +203,7 @@ export default {
                 },
                 layer2: {
                     show: true,
-                    color: "#333333"
+                    color: "#00ff99"
                 },
                 layer3: {
                     show: true,
