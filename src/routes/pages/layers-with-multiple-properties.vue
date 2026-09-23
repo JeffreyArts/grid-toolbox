@@ -168,14 +168,14 @@ const layer3 = {
 }
 
 
-// De drawLayer functies zijn vergelijkbaar met die uit de eerdere layer demo
-// Maar het options object is wat uitgebreid en de invulling van de functies ook
-// zodat ze gebruik maken van deze nieuwe opties
+// De drawLayer functies zijn vergelijkbaar met die uit de eerdere layers-with-color demo
+// Maar nu heeft het een options object in plaats van een color string
+// Hierdoor kun je meerdere eigenschappen in 1 keer doorgeven
 
 ////////////////////////
 // LAYER 1
 ////////////////////////
-const drawLayer1(options = { color: black, amountOfSquares: 2, size: 100 }) {
+const drawLayer1(options = { color: "black", amountOfSquares: 2, size: 100 }) {
     
     // Update de kleur
     ctx.fillStyle = options.color  
@@ -211,7 +211,7 @@ const drawLayer1(options = { color: black, amountOfSquares: 2, size: 100 }) {
 ////////////////////////
 // LAYER 2
 ////////////////////////
-const drawLayer2(options = { color: black, diameter: 100 }) {
+const drawLayer2(options = { color: "black", diameter: 100 }) {
 
     // Update de kleur
     ctx.fillStyle = options.color  
@@ -227,7 +227,7 @@ const drawLayer2(options = { color: black, diameter: 100 }) {
 ////////////////////////
 // LAYER 3
 ////////////////////////
-const drawLayer3(options = { color: black, position: "tl" }) {
+const drawLayer3(options = { color: "black", position: "tl" }) {
     
     // Update de kleur
     ctx.fillStyle = options.color  
@@ -269,8 +269,6 @@ const drawLayer3(options = { color: black, position: "tl" }) {
 ////////////////////////
 // UPDATE CANVAS
 ////////////////////////
-// 1 Centrale functie die het canvas reset, en die de verschillende functies
-// aanroept om de verschillende lagen te tekenen.
 updateCanvas() {
     // Reset canvas, zodat deze weer leeg is
     ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
@@ -396,7 +394,7 @@ export default {
 
 
         // Teken 2 vierkantjes
-        drawLayer1(options = { color: black, amountOfSquares: 2, size: 100 }) {
+        drawLayer1(options = { color: "black", amountOfSquares: 2, size: 100 }) {
 
             const ctx = this.canvas.ctx
             ctx.fillStyle = options.color  
@@ -430,7 +428,7 @@ export default {
 
 
         // Teken een cirkel
-        drawLayer2(options = { color: black, diameter: 100 }) {
+        drawLayer2(options = { color: "black", diameter: 100 }) {
             const ctx = this.canvas.ctx
             ctx.fillStyle = options.color  
             
@@ -449,7 +447,7 @@ export default {
             )
             ctx.fill()
         },
-        drawLayer3(options = { color: black, position: "tl" }) {
+        drawLayer3(options = { color: "black", position: "tl" }) {
             const ctx = this.canvas.ctx
 
             const pos = options.position

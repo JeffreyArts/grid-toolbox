@@ -113,16 +113,62 @@ const layer3 = {
     color: "#9900ff"
 }
 
+// Laag1 tekent twee vierkantjes
+drawLayer1(color = "black") {
 
-// Zie layers pagina voor deze functies
-// Belangrijk detail wel.
-// De drawLayer functies accepteren een opties object, 
-// waar de color property van gebruikt wordt om de kleur per laag te bepalen
-drawLayer1(options = { color: black }) { /* ... */ }
-drawLayer2(options = { color: black }) { /* ... */ }
-drawLayer3(options = { color: black }) { /* ... */ }
+    // Update de kleur
+    ctx.fillStyle = color  
+    
+    // Helper variabelen om de code beter leesbaar te houden
+    const width = this.canvas.width/2
+    const height = this.canvas.height/2
+    
+    // Maak paden voor de 2 vierkantjes
+    ctx.beginPath()
+    ctx.rect(width, 0, width, height)
+    ctx.rect(0, height, width, height)
+
+    // Vul paden
+    ctx.fill()
+}
 
 
+// Laag2 tekent een cirkel
+drawLayer2(color = "black") {
+    
+    // Update de kleur
+    ctx.fillStyle = color  
+    
+    // Helper variabelen om de code beter leesbaar te houden
+    const x = canvas.width/2
+    const y = canvas.height/2
+    const radius = this.canvas.width/2
+    
+    ctx.beginPath()
+    ctx.ellipse(x, y, radius, radius, 0, 0, Math.PI * 2)
+    ctx.fill()
+}
+    
+// Laag3 tekent een half vierkant (diagonaal)
+drawLayer3(color = "black") {
+    
+    // Update de kleur
+    const ctx = this.canvas.ctx
+
+    // Maak pad voor de driehoek
+    ctx.fillStyle = color  
+
+    // Begin linksbovenin, dan naar rechts & tot slot naar linksonder
+    ctx.beginPath()
+    ctx.moveTo(0,0)
+    ctx.lineTo(this.canvas.width, 0)
+    ctx.lineTo(0,this.canvas.height)
+    ctx.fill()
+}
+
+////////////////////////
+// UPDATE CANVAS
+////////////////////////
 // 1 Centrale functie die het canvas reset, en die de verschillende functies
 // aanroept om de verschillende lagen te tekenen.
 updateCanvas() {
@@ -130,9 +176,9 @@ updateCanvas() {
     ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
 
     // Teken de lagen
-    if (layer1.show) { this.drawLayer1({ color: layer1.color}) }
-    if (layer2.show) { this.drawLayer1({ color: layer2.color}) }
-    if (layer3.show) { this.drawLayer1({ color: layer3.color}) }
+    if (layer1.show) { this.drawLayer1(layer1.color) }
+    if (layer2.show) { this.drawLayer1(layer2.color) }
+    if (layer3.show) { this.drawLayer1(layer3.color) }
 }
 
 `
@@ -242,10 +288,12 @@ export default {
 
 
         // Teken 2 vierkantjes
-        drawLayer1(options = { color: black }) {
+        drawLayer1(color = "black") {
 
             const ctx = this.canvas.ctx
-            ctx.fillStyle = options.color  
+
+            // Update de kleur
+            ctx.fillStyle = color  
             
             const width = this.canvas.width/2
             const height = this.canvas.height/2
@@ -261,9 +309,11 @@ export default {
 
 
         // Teken een cirkel
-        drawLayer2(options = { color: black }) {
+        drawLayer2(color = "black") {
             const ctx = this.canvas.ctx
-            ctx.fillStyle = options.color  
+
+            // Update de kleur
+            ctx.fillStyle = color  
             
             // Maak pad voor de cirkel
             const radius = this.canvas.width/2
@@ -280,12 +330,13 @@ export default {
             )
             ctx.fill()
         },
-        drawLayer3(options = { color: black }) {
+        drawLayer3(color = "black") {
             const ctx = this.canvas.ctx
 
+            // Update de kleur
+            ctx.fillStyle = color  
+            
             // Maak pad voor de driehoek
-            ctx.fillStyle = options.color  
-
             ctx.beginPath()
             ctx.moveTo(0,0)
             ctx.lineTo(this.canvas.width, 0)
@@ -306,15 +357,15 @@ export default {
 
             // Teken laag 1 (als dat moet)
             if (this.options.layer1.show) {
-                this.drawLayer1({ color: this.options.layer1.color})
+                this.drawLayer1(this.options.layer1.color)
             }
             // Teken laag 2 (als dat moet)
             if (this.options.layer2.show) {
-                this.drawLayer2({ color: this.options.layer2.color})
+                this.drawLayer2(this.options.layer2.color)
             }
             // Teken laag 3 (als dat moet)
             if (this.options.layer3.show) {
-                this.drawLayer3({ color: this.options.layer3.color})
+                this.drawLayer3( this.options.layer3.color)
             }
         },
         drawBackgroundColor(color) {

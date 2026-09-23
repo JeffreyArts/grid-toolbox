@@ -100,8 +100,8 @@ const color = "#f93e3e";
 
 
 // Laag1 tekent twee vierkantjes
-drawLayer1(options = { color: black }) {
-    ctx.fillStyle = options.color  
+drawLayer1() {
+    ctx.fillStyle = color  
     
     // Helper variabelen om de code beter leesbaar te houden
     const width = this.canvas.width/2
@@ -118,8 +118,8 @@ drawLayer1(options = { color: black }) {
 
 
 // Laag2 tekent een cirkel
-drawLayer2(options = { color: black }) {
-    ctx.fillStyle = options.color  
+drawLayer2() {
+    ctx.fillStyle = color  
     
     // Helper variabelen om de code beter leesbaar te houden
     const x = canvas.width/2
@@ -132,11 +132,11 @@ drawLayer2(options = { color: black }) {
 }
     
 // Laag3 tekent een half vierkant (diagonaal)
-drawLayer3(options = { color: black }) {
+drawLayer3() {
     const ctx = this.canvas.ctx
 
     // Maak pad voor de driehoek
-    ctx.fillStyle = options.color  
+    ctx.fillStyle = color  
 
     // Begin linksbovenin, dan naar rechts & tot slot naar linksonder
     ctx.beginPath()
@@ -144,7 +144,6 @@ drawLayer3(options = { color: black }) {
     ctx.lineTo(this.canvas.width, 0)
     ctx.lineTo(0,this.canvas.height)
     ctx.fill()
-
 }
 
 // 1 Centrale functie die het canvas reset, en de verschillende functies
@@ -160,9 +159,9 @@ updateCanvas() {
     ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
 
     // Teken laag 1 (als dat moet)
-    if (showLayer1) { this.drawLayer1({ color: this.options.color}) }
-    if (showLayer2) { this.drawLayer2({ color: this.options.color}) }
-    if (showLayer3) { this.drawLayer3({ color: this.options.color})}
+    if (showLayer1) { this.drawLayer1()}
+    if (showLayer2) { this.drawLayer2()}
+    if (showLayer3) { this.drawLayer3()}
 },
 
 
@@ -254,10 +253,10 @@ export default {
 
 
         // Teken 2 vierkantjes
-        drawLayer1(options = { color: black }) {
+        drawLayer1() {
 
             const ctx = this.canvas.ctx
-            ctx.fillStyle = options.color  
+            ctx.fillStyle = this.options.color  
             
             const width = this.canvas.width/2
             const height = this.canvas.height/2
@@ -273,9 +272,9 @@ export default {
 
 
         // Teken een cirkel
-        drawLayer2(options = { color: black }) {
+        drawLayer2() {
             const ctx = this.canvas.ctx
-            ctx.fillStyle = options.color  
+            ctx.fillStyle = this.options.color  
             
             // Maak pad voor de cirkel
             const radius = this.canvas.width/2
@@ -292,11 +291,11 @@ export default {
             )
             ctx.fill()
         },
-        drawLayer3(options = { color: black }) {
+        drawLayer3() {
             const ctx = this.canvas.ctx
 
             // Maak pad voor de driehoek
-            ctx.fillStyle = options.color  
+            ctx.fillStyle = this.options.color  
 
             ctx.beginPath()
             ctx.moveTo(0,0)
@@ -318,15 +317,15 @@ export default {
 
             // Teken laag 1 (als dat moet)
             if (this.options.layer1) {
-                this.drawLayer1({ color: this.options.color})
+                this.drawLayer1()
             }
             // Teken laag 2 (als dat moet)
             if (this.options.layer2) {
-                this.drawLayer2({ color: this.options.color})
+                this.drawLayer2()
             }
             // Teken laag 3 (als dat moet)
             if (this.options.layer3) {
-                this.drawLayer3({ color: this.options.color})
+                this.drawLayer3()
             }
         },
         drawBackgroundColor(color) {
