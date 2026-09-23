@@ -16,22 +16,23 @@ import CellSize from "./pages/cell-size.vue"
 import CellSizePlusShapeSize from "./pages/cell-size-plus-shape-size.vue"
 import CellImage from "./pages/cell-image.vue"
 import CanvasImage from "./pages/canvas-image.vue"
+import Polygon from "./pages/polygon.vue";
 
 const routes = [{
         path: "/",
         name: "Home",
         component: Home,
     },
-    {
-        path: "/options-overview",
-        name: "Options overview",
-        component: OptionsOverview,
-    },
+    // {
+    //     path: "/options-overview",
+    //     name: "Options overview",
+    //     component: OptionsOverview,
+    // },
     {
         path: "/circle",
         name: "Circle",
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
         component: Circle,
     },
@@ -39,7 +40,7 @@ const routes = [{
         path: "/rectangle",
         name: "Rectangle",
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
         component: Rectangle,
     },
@@ -47,7 +48,7 @@ const routes = [{
         path: "/triangle",
         name: "Triangle",
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
         component: Triangle,
     },
@@ -55,7 +56,7 @@ const routes = [{
         path: "/plus",
         name: "Plus",
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
         component: Plus,
     },
@@ -63,16 +64,24 @@ const routes = [{
         path: "/ellipse",
         name: "Ellipse",
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
         component: Ellipse,
+    },
+    {
+        path: "/polygon",
+        name: "Polygon",
+        component: Polygon,
+        meta: {
+            group: "Drawing shapes",
+        },
     },
     {
         path: "/canvas-image",
         name: "Canvas Image",
         component: CanvasImage,
         meta: {
-            group: "Draw shape",
+            group: "Drawing shapes",
         },
     },
     {
