@@ -63,6 +63,7 @@
                             <option value="square"> Square </option>
                             <option value="plus"> Plus </option>
                             <option value="triangle"> Triangle </option>
+                            <option value="hexagon"> Hexagon </option>
                         </select>
                     </div>
 
@@ -87,6 +88,9 @@ const codeSnippet =
 // Haal canvas element op en haal de context hiervan op
 const canvas = getElementById("canvas")
 const ctx = this.canvas.el.getContext("2d");
+
+// Voor details over de drawShape method, ga naar de teken-functie pagina
+const drawShape(...)
 
 const hasXOffset = false
 const hasYOffset = false
@@ -300,7 +304,25 @@ export default {
                 ctx.moveTo(x - diameter/2, y + diameter/2)
                 ctx.lineTo(x,y - diameter/2)
                 ctx.lineTo(x + diameter/2,y + diameter/2)
-            } 
+            } else if (this.options.shape == "hexagon") {
+
+                const points = 6
+                const chunk = (Math.PI * 2) / points
+                const radius = diameter/2
+            
+                for (let i = 0; i < points; i++) {
+                    const rotation = chunk * i - 90 * (Math.PI/180)
+
+                    const xPos = x + radius * Math.cos(rotation)
+                    const yPos = y + radius * Math.sin(rotation)
+                    
+                    if (i === 0) {
+                        ctx.moveTo(xPos, yPos);
+                    } else {
+                        ctx.lineTo(xPos, yPos);
+                    }
+                }
+            }
         },
         updateCanvas() {
             // Als de diameter 0 is, dan updaten we het grid niet. 

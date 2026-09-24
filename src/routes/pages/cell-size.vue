@@ -73,6 +73,7 @@
                             <option value="square"> Square </option>
                             <option value="plus"> Plus </option>
                             <option value="triangle"> Triangle </option>
+                            <option value="hexagon"> Hexagon </option>
                         </select>
                     </div>
 
@@ -100,7 +101,7 @@ const ctx = this.canvas.el.getContext("2d");
 
 
 /*******
- * Tot nu toe waren alle cellen van het grid vierkant.
+ * Tot nu toe waren alle cellen van het grid vierkant (even breed als hoog).
  * In dit voorbeeld splitsen we de diameter variabel op
  * naar een cellWidth & cellHeight. Zo kunnen we de breedte
  * en hoogte van iedere cell apart aanpassen.
@@ -276,7 +277,26 @@ export default {
                 ctx.moveTo(x - width/2, y + height/2)
                 ctx.lineTo(x,y - height/2)
                 ctx.lineTo(x + width/2,y + height/2)
-            } 
+            } else if (this.options.shape == "hexagon") {
+
+                const points = 6
+                const chunk = (Math.PI * 2) / points
+                const radiusX = width/2
+                const radiusY = height/2
+            
+                for (let i = 0; i < points; i++) {
+                    const rotation = chunk * i - 90 * (Math.PI/180)
+
+                    const xPos = x + radiusX * Math.cos(rotation)
+                    const yPos = y + radiusY * Math.sin(rotation)
+                    
+                    if (i === 0) {
+                        ctx.moveTo(xPos, yPos);
+                    } else {
+                        ctx.lineTo(xPos, yPos);
+                    }
+                }
+            }
         },
         updateCanvas() {
             // Als cell height of width 0 is, dan updaten we het grid niet. 
