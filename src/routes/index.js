@@ -22,6 +22,7 @@ import LayersWithMultipleProperties from "./pages/layers-with-multiple-propertie
 import LayersViaArray from "./pages/layers-via-array.vue";
 import LayersViaArraWithSorting from "./pages/layers-via-array-w-sorting.vue";
 import LoadingImage from "./pages/loading-image.vue";
+import RetrievePixelData from "./pages/retrieve-pixel-data.vue";
 
 const routes = [{
         path: "/",
@@ -197,6 +198,14 @@ const routes = [{
         path: "/loading-image",
         name: "Loading an image",
         component: LoadingImage,
+        meta: {
+            group: "Using image data",
+        },
+    },
+    {
+        path: "/retrieve-pixel-data",
+        name: "Retrieve pixel data",
+        component: RetrievePixelData,
         meta: {
             group: "Using image data",
         },
