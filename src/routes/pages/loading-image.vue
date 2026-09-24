@@ -11,7 +11,7 @@
                 <canvas ref="canvas"></canvas>
                 <div class="canvas-image-container">
                     <img src="/ganzen.png" id="canvas-image" ref="canvas-image">
-                    <span>canvas image</span>
+                    <span>uploaded image</span>
                 </div>
             </div>
             <br>

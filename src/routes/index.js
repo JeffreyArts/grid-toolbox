@@ -15,13 +15,13 @@ import DoubleOffset from "./pages/double-offset.vue"
 import CellSize from "./pages/cell-size.vue"
 import CellSizePlusShapeSize from "./pages/cell-size-plus-shape-size.vue"
 import CellImage from "./pages/cell-image.vue"
-import CanvasImage from "./pages/canvas-image.vue"
 import Polygon from "./pages/polygon.vue";
 import Layers from "./pages/layers.vue";
 import LayersWithColor from "./pages/layers-with-color.vue";
 import LayersWithMultipleProperties from "./pages/layers-with-multiple-properties.vue";
 import LayersViaArray from "./pages/layers-via-array.vue";
 import LayersViaArraWithSorting from "./pages/layers-via-array-w-sorting.vue";
+import LoadingImage from "./pages/loading-image.vue";
 
 const routes = [{
         path: "/",
@@ -77,14 +77,6 @@ const routes = [{
         path: "/polygon",
         name: "Polygon",
         component: Polygon,
-        meta: {
-            group: "Drawing shapes",
-        },
-    },
-    {
-        path: "/canvas-image",
-        name: "Canvas Image",
-        component: CanvasImage,
         meta: {
             group: "Drawing shapes",
         },
@@ -199,6 +191,14 @@ const routes = [{
         component: LayersViaArraWithSorting,
         meta: {
             group: "Using layers",
+        },
+    },
+    {
+        path: "/loading-image",
+        name: "Loading an image",
+        component: LoadingImage,
+        meta: {
+            group: "Using image data",
         },
     },
 

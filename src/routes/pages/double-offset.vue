@@ -90,7 +90,7 @@ const canvas = getElementById("canvas")
 const ctx = this.canvas.el.getContext("2d");
 
 // Voor details over de drawShape method, ga naar de teken-functie pagina
-const drawShape(...)
+const drawShape(/*...*/)
 
 const hasXOffset = false
 const hasYOffset = false
@@ -166,8 +166,8 @@ export default {
             options: {
                 diameter: 32,
                 shape: "circle",
-                xOffset: false,
-                yOffset: false,
+                xOffset: true,
+                yOffset: true,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
