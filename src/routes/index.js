@@ -23,6 +23,7 @@ import LayersViaArray from "./pages/layers-via-array.vue";
 import LayersViaArraWithSorting from "./pages/layers-via-array-w-sorting.vue";
 import LoadingImage from "./pages/loading-image.vue";
 import RetrievePixelData from "./pages/retrieve-pixel-data.vue";
+import DifferentImagesPerCell from "./pages/different-images-per-cell.vue";
 
 const routes = [{
         path: "/",
@@ -84,7 +85,7 @@ const routes = [{
     },
     {
         path: "/horizontal-line",
-        name: "1. Horizontal line",
+        name: "Horizontal line",
         component: HorizontalLine,
         meta: {
             group: "How to draw a grid",
@@ -92,7 +93,7 @@ const routes = [{
     },
     {
         path: "/vertical-line",
-        name: "2. Vertical line",
+        name: "Vertical line",
         component: VerticalLine,
         meta: {
             group: "How to draw a grid",
@@ -100,7 +101,7 @@ const routes = [{
     },
     {
         path: "/vertical-plus-horizontal-line",
-        name: "3. Vertical + Horizontal line",
+        name: "Vertical + Horizontal line",
         component: VerticalPlusHorizontalLine,
         meta: {
             group: "How to draw a grid",
@@ -108,7 +109,7 @@ const routes = [{
     },
     {
         path: "/teken-functie",
-        name: "4. Teken functie",
+        name: "Teken functie",
         component: TekenFunctie,
         meta: {
             group: "How to draw a grid",
@@ -116,7 +117,7 @@ const routes = [{
     },
     {
         path: "/x-offset",
-        name: "5. X Offset",
+        name: "X Offset",
         component: xOffset,
         meta: {
             group: "How to draw a grid",
@@ -124,7 +125,7 @@ const routes = [{
     },
     {
         path: "/double-offset",
-        name: "6. Double Offset",
+        name: "Double Offset",
         component: DoubleOffset,
         meta: {
             group: "How to draw a grid",
@@ -132,7 +133,7 @@ const routes = [{
     },
     {
         path: "/cell-size",
-        name: "7. Cell size",
+        name: "Cell size",
         component: CellSize,
         meta: {
             group: "How to draw a grid",
@@ -140,7 +141,7 @@ const routes = [{
     },
     {
         path: "/cell-size-plus-shape-size",
-        name: "8. Cell size + Shape size",
+        name: "Cell size + Shape size",
         component: CellSizePlusShapeSize,
         meta: {
             group: "How to draw a grid",
@@ -148,8 +149,16 @@ const routes = [{
     },
     {
         path: "/cell-image",
-        name: "9. Cell Image",
+        name: "Cell Image",
         component: CellImage,
+        meta: {
+            group: "How to draw a grid",
+        },
+    },
+    {
+        path: "/different-images-per-cell",
+        name: "Different images per cell",
+        component: DifferentImagesPerCell,
         meta: {
             group: "How to draw a grid",
         },
