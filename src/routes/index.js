@@ -21,6 +21,7 @@ import Layers from "./pages/layers.vue";
 import LayersWithColor from "./pages/layers-with-color.vue";
 import LayersWithMultipleProperties from "./pages/layers-with-multiple-properties.vue";
 import LayersViaArray from "./pages/layers-via-array.vue";
+import LayersViaArraWithSorting from "./pages/layers-via-array-w-sorting.vue";
 
 const routes = [{
         path: "/",
@@ -165,7 +166,7 @@ const routes = [{
         name: "Layers",
         component: Layers,
         meta: {
-            group: "Drawing techniques",
+            group: "Using layers",
         },
     },
     {
@@ -173,7 +174,7 @@ const routes = [{
         name: "Layers with color property",
         component: LayersWithColor,
         meta: {
-            group: "Drawing techniques",
+            group: "Using layers",
         },
     },
     {
@@ -181,7 +182,7 @@ const routes = [{
         name: "Layers with multiple properties",
         component: LayersWithMultipleProperties,
         meta: {
-            group: "Drawing techniques",
+            group: "Using layers",
         },
     },
     {
@@ -189,7 +190,15 @@ const routes = [{
         name: "Layers via array",
         component: LayersViaArray,
         meta: {
-            group: "Drawing techniques",
+            group: "Using layers",
+        },
+    },
+    {
+        path: "/layers-via-array-with-sorting",
+        name: "Layers via array with sorting",
+        component: LayersViaArraWithSorting,
+        meta: {
+            group: "Using layers",
         },
     },
 

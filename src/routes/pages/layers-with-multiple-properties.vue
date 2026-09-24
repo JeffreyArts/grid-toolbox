@@ -123,7 +123,7 @@
 
                     <div class="option">
                         <label>Position</label>
-                        <select v-model="options.layer3.position">
+                        <select v-model="options.layer3.diagonalPosition">
                             <option value="tl">Top left</option>
                             <option value="tr">Top right</option>
                             <option value="br">Bottom right</option>
@@ -164,7 +164,7 @@ const layer2 = {
 const layer3 = {
     show: true,
     color: "#9b21c0",
-    position: "tl"
+    diagonalPosition: "tl"
 }
 
 
@@ -227,13 +227,13 @@ const drawLayer2(options = { color: "black", diameter: 100 }) {
 ////////////////////////
 // LAYER 3
 ////////////////////////
-const drawLayer3(options = { color: "black", position: "tl" }) {
+const drawLayer3(options = { color: "black", diagonalPosition: "tl" }) {
     
     // Update de kleur
     ctx.fillStyle = options.color  
     
     // Helper variabele om code leesbaarder te houden
-    const pos = options.position
+    const pos = options.diagonalPosition
 
     ctx.beginPath()
 
@@ -276,7 +276,7 @@ updateCanvas() {
     // Teken de lagen
     if (layer1.show) { this.drawLayer1({ color: layer1.color, amountOfSquares: layer1.amountOfSquares, size: layer1.size }) }
     if (layer2.show) { this.drawLayer2({ color: layer2.color, diameter: layer2.diameter }) }
-    if (layer3.show) { this.drawLayer3({ color: layer3.color, position: layer3.position }) }
+    if (layer3.show) { this.drawLayer3({ color: layer3.color, diagonalPosition: layer3.diagonalPosition }) }
 }
 
 `
@@ -309,7 +309,7 @@ export default {
                 layer3: {
                     show: true,
                     color: "#9900ff",
-                    position: "tl"
+                    diagonalPosition: "tl"
                 },
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
@@ -365,7 +365,7 @@ export default {
                 const layer3Snippet = `const layer3 = {
     show: ${value.show},
     color: "${value.color}",
-    position: "${value.position}"
+    diagonalPosition: "${value.diagonalPosition}"
 }`
                 this.codeSnippet = this.codeSnippet.replace(
                     /const layer3 = \{[\s\S]*?\n\}/,
@@ -447,10 +447,10 @@ export default {
             )
             ctx.fill()
         },
-        drawLayer3(options = { color: "black", position: "tl" }) {
+        drawLayer3(options = { color: "black", diagonalPosition: "tl" }) {
             const ctx = this.canvas.ctx
 
-            const pos = options.position
+            const pos = options.diagonalPosition
 
             // Maak pad voor de driehoek
             ctx.fillStyle = options.color  
@@ -506,7 +506,7 @@ export default {
             if (this.options.layer3.show) {
                 this.drawLayer3({
                     color: this.options.layer3.color,
-                    position: this.options.layer3.position
+                    diagonalPosition: this.options.layer3.diagonalPosition
                 })
             }
         },

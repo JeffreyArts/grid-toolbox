@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Layers via Array</h1>
+            <h1>Layers via array with Sorting</h1>
             <hr>
         </header>
 
@@ -12,7 +12,10 @@
             </div>
 
             <highlightjs language="js" :code="codeSnippet" />
-            <a href="https://www.w3schools.com/js/js_arrays.asp">Hoe werken arrays ook alweer?</a>
+            <a href="https://www.w3schools.com/js/js_array_sort.asp#mark_numeric">Sorteren van arrays (met objecten)</a>
+
+            <h3>Extra uitleg</h3>
+            <highlightjs language="js" :code="extraExplanation" />
         </section>
 
         <aside class="sidebar">
@@ -31,7 +34,7 @@
                     </div>
                 </div>
                 
-                <div class="option-group" v-for="(layer, k) in options.layers" :key="k" :name="`Layer ${k+1} properties`">
+                <div class="option-group" v-for="(layer, k) in sortedLayers" :key="k" :name="`Layer ${k+1} properties`">
 
                     <div class="row">
                         <div class="option">
@@ -53,6 +56,13 @@
                                 Color
                             </label>
                             <input type="color" :id="`layer-${k}color`" v-model="layer.color" >
+                        </div>
+                        <div class="option" ">
+
+                        <label>Position</label>
+                            <select v-model="layer.position" @focus="prevPosition = layer.position" @change="updateOther(layer, sortedLayers[layer.position], prevPosition)">
+                                <option :value="k" v-for="(v,k) in options.layers" :key="k">{{k}}</option>
+                            </select>
                         </div>
                     </div>
 
@@ -89,7 +99,7 @@
 
 
                     <div class="option" v-if="layer.type == 3">
-                        <label>Position</label>
+                        <label>Diagonal position</label>
                         <select v-model="layer.diagonalPosition">
                             <option value="tl">Top left</option>
                             <option value="tr">Top right</option>
@@ -115,7 +125,16 @@ const ctx = this.canvas.el.getContext("2d");
 
 const layers = []
 
-// De drawLayer functies zijn hetzelfde als in de layers-with-multiple-properties demo
+// Onderstaande code maakt een nieuwe array aan en voegt 
+// daar alle items van de 'layers' array aan toe.
+// Daarna wordt het op basis van de position gesorteerd
+// Zie voor verdere uitleg het codeblock onderaan deze pagina
+const sortedLayers = [...layers].sort((layerA, layerB) => {
+    return layerA.position - layerB.position
+})
+
+
+// De drawLayer functies zijn hetzelfde als in de layers-with-multiple-properties demo 
 const drawLayer1(...) {...}
 const drawLayer2(...) {...}
 const drawLayer3(...) {...}
@@ -126,7 +145,7 @@ updateCanvas() {
     ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
 
     // Teken de lagen
-    for (const layer of layers) {
+    for (const layer of sortedLayers) {
 
         // Als de laag verborgen staat, dan skippen we
         // de lus door naar de volgende stap door continue te gebruiken
@@ -146,12 +165,43 @@ updateCanvas() {
 
 `
 
+const extraExplanation = 
+`
+
+/*****
+ * Je zou het ook zonder de [...] kunnen doen, maar dan sorteer
+ * je de bestaande 'layers' array, en 'sortedLayers' is dan eigenlijk
+ * slechts een alias (of verwijzing) naar de 'layers' array
+ *****/
+const sortedLayers = layers.sort((layerA, layerB) => {
+    return layerA.position - layerB.position
+})
+
+/*****
+ * In bovenstaand voorbeeld zou het misschien zelf eenvoudiger zijn om
+ * de hele 'sortedLayers' variabel weg te halen en gewoon alleen layers gebruiken
+ *****/
+layers.sort((layerA, layerB) => {
+    return layerA.position - layerB.position
+})
+
+// Als je even voor jezelf wilt zien hoe het werk;
+// Kopiëer dan onderstaande 4 regels naar de console.
+// Dan zie je precies wat er gebeurd
+var test = [{v:3}, {v:2}, {v:1}]
+console.log("Voor: ",JSON.stringify(test))
+test.sort((A, B) => A.v - B.v)
+console.log("Na: ",JSON.stringify(test))
+
+// Als je trouwens wilt weten waarom JSON.stringify hier gebruikt wordt, moet je het maar even weghalen en opnieuw runnen.
+`
 
 export default {
     props: [],
     data() {
         return {
             codeSnippet,
+            extraExplanation,
             value: 0,
             canvas: {
                 el: null,
@@ -161,24 +211,19 @@ export default {
             },
             options: {
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim(),
-                layers: [
-                    {
-                        "type": 2,
-                        "color": "#9b21c0",
-                        "show": true,
-                        "diameter": 480
-                    }
-                ],
+                layers: [],
                 layerType: 2,
                 // {
                 //      type: 1 | 2 | 3
+                //      position: number
                 //      color: string
                 //      amountOfSquare: number
                 //      size: number
                 //      diameter: number
                 //      diagonalPosition: string
                 // }
-            }
+            },
+            prevPosition: null
         }
     },
     watch: {
@@ -199,7 +244,7 @@ export default {
         
         "options.layers": {
             handler(value) {
-                const layersSnippet = `const layers = ${JSON.stringify(value, null, 4)}`
+                const layersSnippet = `const layers = ${JSON.stringify(this.options.layers, null, 4)}`
                 this.codeSnippet = this.codeSnippet.replace(
                     /const layers = \[[\s\S]*?\]/,
                     layersSnippet
@@ -208,29 +253,43 @@ export default {
             deep: true,
         },
     },
+    computed: {
+        sortedLayers() {
+            return [...this.options.layers].sort((layerA, layerB) => {
+                return layerA.position - layerB.position
+            })
+        }
+    },
     mounted() {
         this.canvas.el = this.$refs["canvas"]
         this.setCanvasDimensions()
         this.canvas.ctx = this.canvas.el.getContext("2d");
+        this.addLayer()
     },
     methods: {
         addLayer() {
             const newLayer = {
                 type: this.options.layerType,
                 color: this.options.color,
-                show: true
+                show: true,
+                position: this.options.layers.length
             }
 
             if (this.options.layerType == 1) {
                 newLayer.amountOfSquares = 2
                 newLayer.size = 100
             } else if (this.options.layerType == 2) {
-                newLayer.diameter = 960
+                newLayer.diameter = 480
             } else if (this.options.layerType == 3) {
                 newLayer.diagonalPosition = "tl"
             } 
 
             this.options.layers.push(newLayer)
+        },  
+        updateOther(layer, otherLayer, oldPosition) {
+            if (otherLayer && otherLayer !== layer) {
+                otherLayer.position = oldPosition
+            }
         },  
         setCanvasDimensions() {
             const canvas = this.canvas.el
@@ -337,7 +396,7 @@ export default {
 
             // Reset canvas, zodat deze weer leeg is
             ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
-            for (const layer of this.options.layers) {
+            for (const layer of this.sortedLayers) {
 
                 if (!layer.show) {
                     continue;
