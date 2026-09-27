@@ -62,7 +62,7 @@ const codeSnippet =
 `
 // Haal canvas element op en haal de context hiervan op
 const canvas = getElementById("canvas")
-const ctx = this.canvas.el.getContext("2d");
+const ctx = canvas.el.getContext("2d");
 
 ctx.fillStyle = "#f00";
 ctx.beginPath()

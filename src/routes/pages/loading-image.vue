@@ -53,7 +53,7 @@ const codeSnippet =
 `
 // Haal canvas element op en haal de context hiervan op
 const canvas = getElementById("canvas")
-const ctx = this.canvas.el.getContext("2d");
+const ctx = canvas.el.getContext("2d");
 
 // Helper functie die automatisch wordt uitgevoerd wanneer je een bestand upload
 const changeImage = (event) => {
