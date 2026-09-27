@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Cell Image</h1>
+            <h1>Different images per cell</h1>
             <hr>
         </header>
 
@@ -12,7 +12,7 @@
             </div>
 
             <highlightjs language="js" :code="codeSnippet" />
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder">Meer informatie over de modulus operator</a>
+            <a href="https://www.w3schools.com/JS/js_async_promises.asp">JavaScript promises</a>
         </section>
 
         <aside class="sidebar">
@@ -72,9 +72,122 @@ import _ from "lodash"
 
 const codeSnippet = 
 `
-uitleg volgt...
+/******
+ * In dit voorbeeld gebruiken we een array van afbeeldingen, 
+ * en tekenen we elke afbeelding in een cel van het grid.
+******/
+
+// Variabelen
+
+const canvas = getElementById("canvas")
+const ctx = canvas.el.getContext("2d");
+
+const cellsHorizontal = 4
+const cellsVertical = 4
+
+const imageCache = {}
+// imageCache is een object (associatieve array) waar we de geladen afbeeldingen opslaan,
+// zodat we ze niet opnieuw hoeven te laden wanneer ze al een keer geladen zijn.
+const images = [
+    {"src": "chips/chips-1.jpg"},
+    {"src": "chips/chips-2.jpg"},
+    {"src": "chips/chips-3.jpg"},
+    {"src": "chips/chips-4.jpg"},
+    // ...
+]
+// images is een array met objecten {src: "string"}. 
+// Had ook een array van strings kunnen zijn, maar we hebben objecten
+// nodig voor het volgende voorbeeld (sorteren). 
+
+// Deze functie returnt een Promise met de afbeelding
+// Als de afbeelding al in de cache zit, returnt hij die direct.
+// Anders maakt het een nieuwe afbeelding aan met Image(), 
+// en zodra die geladen is, wordt de afbeelding in de cache opgeslagen en ge-returnt.
+const async loadImage = (src) => {
+
+    // Check eerst of de afbeelding al in de cache zit. 
+    if (imageCache[src]) {
+        // return Promise met de afbeelding uit de cache
+        return Promise.resolve(imageCache[src])
+    }
+
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+
+        // Deze functie wordt aangeroepen zodra de afbeelding geladen is.
+        img.onload = () => {
+
+            // Sla de afbeelding op in de cache
+            imageCache[src] = img
+            
+            // return Promise met de afbeelding 
+            resolve(img)
+        }
+
+        // Deze functie wordt aangeroepen als er een fout optreedt bij het laden van de afbeelding.
+        img.onerror = () => reject(new Error(\`Kan afbeelding niet laden: \${src}\`))
+
+        // Update de src van de afbeelding, zodat de afbeelding wordt geladen.
+        img.src = src
+    })
+}
 
 
+// Teken functie
+const async drawImage(x, y, width, height, src) {
+    try {
+        // We laden eerst de afbeelding met loadImage()
+        // Zo weten we zeker dat de afbeelding geladen is voordat we hem tekenen.
+        const cellImage = await loadImage(src)
+
+        // Daarna tekenen we de afbeelding met drawImage()
+        ctx.drawImage( cellImage, 0, 0, cellImage.naturalWidth, cellImage.naturalHeight, x - width / 2, y - height / 2, width, height )
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+////////////////////////
+// Tekenen van het grid
+////////////////////////
+
+// We maken een kopie van de images array voor het husselen van de afbeeldingen
+let cellImages = [...images]
+const totalCells = cellsHorizontal * cellsVertical // 16
+
+// Als er minder afbeeldingen in cellImages zit dan dat we nodig hebben
+// Dan voegen we de gewoon nog een keer de afbeeldingen aan de array toe
+while (cellImages.length < totalCells) {
+    cellImages.push(...images)
+}
+
+// Als de afbeeldingen gehusselt moeten worden, dan doen we dat
+// met een functie van de lodash library 
+// (die moet apart worden geïmporteerd, en valt buiten de scope van deze demonstratie)
+// https://lodash.com/docs/4.17.15#shuffle
+if (shuffleImages) {
+    cellImages = _.shuffle(cellImages)
+}
+
+// En hier komt het grid. 
+// We gebruiken de index variabel om steeds een andere afbeelding 
+// te selecteren uit de cellImages array.
+let index = 0
+
+const cellWidth = canvas.width / cellsHorizontal
+const cellHeight = canvas.height / cellsVertical
+
+for (let x = 0; x < canvas.width; x += cellWidth) {
+    for (let y = 0; y < canvas.height; y += cellHeight) {
+        const src = cellImages[index].src
+        if (src) {
+            drawImage(x + cellWidth / 2, y + cellHeight / 2, cellWidth, cellHeight, src)
+        }
+        // Niet vergeten de index te verhogen!
+        index++
+    }
+}
 
 `
 
@@ -190,11 +303,13 @@ export default {
         "options.cellsHorizontal": {
             handler(value, oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const cellsHorizontal = ${oldValue}`,`const cellsHorizontal = ${value}`)
+                this.codeSnippet = this.codeSnippet.replace(`const totalCells = cellsHorizontal * cellsVertical // ${oldValue * this.options.cellsVertical}`,`const totalCells = cellsHorizontal * cellsVertical // ${value * this.options.cellsVertical}`)
             },
         },
         "options.cellsVertical": {
             handler(value, oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const cellsVertical = ${oldValue}`,`const cellsVertical = ${value}`)
+                this.codeSnippet = this.codeSnippet.replace(`const totalCells = cellsHorizontal * cellsVertical // ${oldValue * this.options.cellsHorizontal}`,`const totalCells = cellsHorizontal * cellsVertical // ${value * this.options.cellsHorizontal}`)
             },
         },
     },
@@ -273,7 +388,7 @@ export default {
                 for (let y = 0; y < this.canvas.height; y += cellHeight) {
                     const src = images[index]?.src
                     if (src) {
-                        renderJobs.push(this.drawImage(x + cellWidth / 2, y + cellHeight / 2, cellWidth, cellHeight, src))
+                        this.drawImage(x + cellWidth / 2, y + cellHeight / 2, cellWidth, cellHeight, src)
                     }
                     index++
                 }

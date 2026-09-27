@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Cell images with sorting</h1>
+            <h1>Cell images with sorting (advanced)</h1>
             <hr>
         </header>
 
@@ -12,7 +12,7 @@
             </div>
 
             <highlightjs language="js" :code="codeSnippet" />
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder">Meer informatie over de modulus operator</a>
+            <a href="https://lodash.com/">Lodash library</a>
         </section>
 
         <aside class="sidebar">
@@ -72,6 +72,8 @@ import _ from "lodash"
 
 const codeSnippet = 
 `
+import _ from "lodash"
+
 let images = [
     {"src": "chips/chips-1.jpg", "size" : "l"},
     {"src": "chips/chips-2.jpg", "size" : "m"},
@@ -85,16 +87,18 @@ let images = [
     {"src": "chips/chips-10.jpg", "size" : "s"}
     //...
 ]
+
+// Hussel de afbeeldingen voordat je ze gaat sorteren
+if (shuffleImages) {
+    images = _.shuffle(images)
+}
+
+// Sorteer de array op basis van de volgorde van klein naar groot
 const order = ["xs", "s", "m", "l"]
+images = _.sortBy(images, image => order.indexOf(image.size))
 
-// Via indexOf(image.size) krijgen we de positie van de waarde hiervan in de sort-array (0, 1, 2 of 3)
-// Vervolgens gebruiken we die waarde om de afbeeldingen in de array te sorteren 
-images = images.sort((a, b) => {
-    const orderA = order.indexOf(a.size)
-    const orderB = order.indexOf(b.size)
-    return orderA - orderB
-})
 
+// Rest van de code kun je vinden op de different images per cell pagina
 
 `
 
@@ -287,13 +291,14 @@ export default {
             }
 
             const order = ["xs", "s", "m", "l"]
-            images = images.sort((a, b) => {
-                const orderA = order.indexOf(a.size)
-                const orderB = order.indexOf(b.size)
-                return orderA - orderB
-            })
+            images = _.sortBy(images, image => order.indexOf(image.size))
+            // Dit is hoe je het moet doen ZONDER lodash:
+            // images = images.sort((a, b) => {
+            //     const orderA = order.indexOf(a.size)
+            //     const orderB = order.indexOf(b.size)
+            //     return orderA - orderB
+            // })
 
-            console.log(images)
 
             const renderJobs = []
             let index = 0
