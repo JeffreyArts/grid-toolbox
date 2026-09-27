@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Cell Image</h1>
+            <h1>Cell images with sorting</h1>
             <hr>
         </header>
 
@@ -72,8 +72,28 @@ import _ from "lodash"
 
 const codeSnippet = 
 `
-uitleg volgt...
+let images = [
+    {"src": "chips/chips-1.jpg", "size" : "l"},
+    {"src": "chips/chips-2.jpg", "size" : "m"},
+    {"src": "chips/chips-3.jpg", "size" : "xs"},
+    {"src": "chips/chips-4.jpg", "size" : "s"},
+    {"src": "chips/chips-5.jpg", "size" : "m"},
+    {"src": "chips/chips-6.jpg", "size" : "m"},
+    {"src": "chips/chips-7.jpg", "size" : "m"},
+    {"src": "chips/chips-8.jpg", "size" : "l"},
+    {"src": "chips/chips-9.jpg", "size" : "s"},
+    {"src": "chips/chips-10.jpg", "size" : "s"}
+    //...
+]
+const order = ["xs", "s", "m", "l"]
 
+// Via indexOf(image.size) krijgen we de positie van de waarde hiervan in de sort-array (0, 1, 2 of 3)
+// Vervolgens gebruiken we die waarde om de afbeeldingen in de array te sorteren 
+images = images.sort((a, b) => {
+    const orderA = order.indexOf(a.size)
+    const orderB = order.indexOf(b.size)
+    return orderA - orderB
+})
 
 
 `
@@ -94,76 +114,76 @@ export default {
             },
             imageCache: {},
             images: [
-                {"src": "chips/chips-1.jpg"},
-                {"src": "chips/chips-2.jpg"},
-                {"src": "chips/chips-3.jpg"},
-                {"src": "chips/chips-4.jpg"},
-                {"src": "chips/chips-5.jpg"},
-                {"src": "chips/chips-6.jpg"},
-                {"src": "chips/chips-7.jpg"},
-                {"src": "chips/chips-8.jpg"},
-                {"src": "chips/chips-9.jpg"},
-                {"src": "chips/chips-10.jpg"},
-                {"src": "chips/chips-11.jpg"},
-                {"src": "chips/chips-12.jpg"},
-                {"src": "chips/chips-13.jpg"},
-                {"src": "chips/chips-14.jpg"},
-                {"src": "chips/chips-15.jpg"},
-                {"src": "chips/chips-16.jpg"},
-                {"src": "chips/chips-17.jpg"},
-                {"src": "chips/chips-18.jpg"},
-                {"src": "chips/chips-19.jpg"},
-                {"src": "chips/chips-20.jpg"},
-                {"src": "chips/chips-21.jpg"},
-                {"src": "chips/chips-22.jpg"},
-                {"src": "chips/chips-23.jpg"},
-                {"src": "chips/chips-24.jpg"},
-                {"src": "chips/chips-25.jpg"},
-                {"src": "chips/chips-26.jpg"},
-                {"src": "chips/chips-27.jpg"},
-                {"src": "chips/chips-28.jpg"},
-                {"src": "chips/chips-29.jpg"},
-                {"src": "chips/chips-30.jpg"},
-                {"src": "chips/chips-31.jpg"},
-                {"src": "chips/chips-32.jpg"},
-                {"src": "chips/chips-33.jpg"},
-                {"src": "chips/chips-34.jpg"},
-                {"src": "chips/chips-35.jpg"},
-                {"src": "chips/chips-36.jpg"},
-                {"src": "chips/chips-37.jpg"},
-                {"src": "chips/chips-38.jpg"},
-                {"src": "chips/chips-39.jpg"},
-                {"src": "chips/chips-40.jpg"},
-                {"src": "chips/chips-41.jpg"},
-                {"src": "chips/chips-42.jpg"},
-                {"src": "chips/chips-43.jpg"},
-                {"src": "chips/chips-44.jpg"},
-                {"src": "chips/chips-45.jpg"},
-                {"src": "chips/chips-46.jpg"},
-                {"src": "chips/chips-47.jpg"},
-                {"src": "chips/chips-48.jpg"},
-                {"src": "chips/chips-49.jpg"},
-                {"src": "chips/chips-50.jpg"},
-                {"src": "chips/chips-51.jpg"},
-                {"src": "chips/chips-52.jpg"},
-                {"src": "chips/chips-53.jpg"},
-                {"src": "chips/chips-54.jpg"},
-                {"src": "chips/chips-55.jpg"},
-                {"src": "chips/chips-56.jpg"},
-                {"src": "chips/chips-57.jpg"},
-                {"src": "chips/chips-58.jpg"},
-                {"src": "chips/chips-59.jpg"},
-                {"src": "chips/chips-60.jpg"},
-                {"src": "chips/chips-61.jpg"},
-                {"src": "chips/chips-62.jpg"},
-                {"src": "chips/chips-63.jpg"},
-                {"src": "chips/chips-64.jpg"},
-                {"src": "chips/chips-65.jpg"},
-                {"src": "chips/chips-66.jpg"},
-                {"src": "chips/chips-67.jpg"},
-                {"src": "chips/chips-68.jpg"},
-                {"src": "chips/chips-69.jpg"},
-                {"src": "chips/chips-70.jpg"}
+                {"src": "chips/chips-1.jpg", "size" : "l"},
+                {"src": "chips/chips-2.jpg", "size" : "m"},
+                {"src": "chips/chips-3.jpg", "size" : "xs"},
+                {"src": "chips/chips-4.jpg", "size" : "s"},
+                {"src": "chips/chips-5.jpg", "size" : "m"},
+                {"src": "chips/chips-6.jpg", "size" : "m"},
+                {"src": "chips/chips-7.jpg", "size" : "m"},
+                {"src": "chips/chips-8.jpg", "size" : "l"},
+                {"src": "chips/chips-9.jpg", "size" : "s"},
+                {"src": "chips/chips-10.jpg", "size" : "s"},
+                {"src": "chips/chips-11.jpg", "size" : "s"},
+                {"src": "chips/chips-12.jpg", "size" : "m"},
+                {"src": "chips/chips-13.jpg", "size" : "m"},
+                {"src": "chips/chips-14.jpg", "size" : "xs"},
+                {"src": "chips/chips-15.jpg", "size" : "s"},
+                {"src": "chips/chips-16.jpg", "size" : "m"},
+                {"src": "chips/chips-17.jpg", "size" : "l"},
+                {"src": "chips/chips-18.jpg", "size" : "l"},
+                {"src": "chips/chips-19.jpg", "size" : "m"},
+                {"src": "chips/chips-20.jpg", "size" : "xs"},
+                {"src": "chips/chips-21.jpg", "size" : "xs"},
+                {"src": "chips/chips-22.jpg", "size" : "m"},
+                {"src": "chips/chips-23.jpg", "size" : "s"},
+                {"src": "chips/chips-24.jpg", "size" : "l"},
+                {"src": "chips/chips-25.jpg", "size" : "xs"},
+                {"src": "chips/chips-26.jpg", "size" : "m"},
+                {"src": "chips/chips-27.jpg", "size" : "m"},
+                {"src": "chips/chips-28.jpg", "size" : "s"},
+                {"src": "chips/chips-29.jpg", "size" : "l"},
+                {"src": "chips/chips-30.jpg", "size" : "m"},
+                {"src": "chips/chips-31.jpg", "size" : "m"},
+                {"src": "chips/chips-32.jpg", "size" : "s"},
+                {"src": "chips/chips-33.jpg", "size" : "l"},
+                {"src": "chips/chips-34.jpg", "size" : "s"},
+                {"src": "chips/chips-35.jpg", "size" : "xs"},
+                {"src": "chips/chips-36.jpg", "size" : "m"},
+                {"src": "chips/chips-37.jpg", "size" : "s"},
+                {"src": "chips/chips-38.jpg", "size" : "l"},
+                {"src": "chips/chips-39.jpg", "size" : "l"},
+                {"src": "chips/chips-40.jpg", "size" : "s"},
+                {"src": "chips/chips-41.jpg", "size" : "xs"},
+                {"src": "chips/chips-42.jpg", "size" : "xs"},
+                {"src": "chips/chips-43.jpg", "size" : "l"},
+                {"src": "chips/chips-44.jpg", "size" : "xs"},
+                {"src": "chips/chips-45.jpg", "size" : "xs"},
+                {"src": "chips/chips-46.jpg", "size" : "m"},
+                {"src": "chips/chips-47.jpg", "size" : "l"},
+                {"src": "chips/chips-48.jpg", "size" : "xs"},
+                {"src": "chips/chips-49.jpg", "size" : "s"},
+                {"src": "chips/chips-50.jpg", "size" : "xs"},
+                {"src": "chips/chips-51.jpg", "size" : "m"},
+                {"src": "chips/chips-52.jpg", "size" : "s"},
+                {"src": "chips/chips-53.jpg", "size" : "l"},
+                {"src": "chips/chips-54.jpg", "size" : "l"},
+                {"src": "chips/chips-55.jpg", "size" : "xs"},
+                {"src": "chips/chips-56.jpg", "size" : "s"},
+                {"src": "chips/chips-57.jpg", "size" : "s"},
+                {"src": "chips/chips-58.jpg", "size" : "s"},
+                {"src": "chips/chips-59.jpg", "size" : "xs"},
+                {"src": "chips/chips-60.jpg", "size" : "m"},
+                {"src": "chips/chips-61.jpg", "size" : "m"},
+                {"src": "chips/chips-62.jpg", "size" : "m"},
+                {"src": "chips/chips-63.jpg", "size" : "s"},
+                {"src": "chips/chips-64.jpg", "size" : "l"},
+                {"src": "chips/chips-65.jpg", "size" : "s"},
+                {"src": "chips/chips-66.jpg", "size" : "s"},
+                {"src": "chips/chips-67.jpg", "size" : "xs"},
+                {"src": "chips/chips-68.jpg", "size" : "m"},
+                {"src": "chips/chips-69.jpg", "size" : "s"},
+                {"src": "chips/chips-70.jpg", "size" : "m"}
             ],
             options: {
                 cellsHorizontal: 4,
@@ -265,6 +285,15 @@ export default {
             if (this.options.shuffleImages) {
                 images = _.shuffle(images)
             }
+
+            const order = ["xs", "s", "m", "l"]
+            images = images.sort((a, b) => {
+                const orderA = order.indexOf(a.size)
+                const orderB = order.indexOf(b.size)
+                return orderA - orderB
+            })
+
+            console.log(images)
 
             const renderJobs = []
             let index = 0

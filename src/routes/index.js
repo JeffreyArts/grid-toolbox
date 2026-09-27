@@ -24,6 +24,7 @@ import LayersViaArraWithSorting from "./pages/layers-via-array-w-sorting.vue";
 import LoadingImage from "./pages/loading-image.vue";
 import RetrievePixelData from "./pages/retrieve-pixel-data.vue";
 import DifferentImagesPerCell from "./pages/different-images-per-cell.vue";
+import DifferentImagesPerCellWithSorting from "./pages/different-images-per-cell-w-sorting.vue";
 
 const routes = [{
         path: "/",
@@ -159,6 +160,14 @@ const routes = [{
         path: "/different-images-per-cell",
         name: "Different images per cell",
         component: DifferentImagesPerCell,
+        meta: {
+            group: "How to draw a grid",
+        },
+    },
+    {
+        path: "/different-images-per-cell-with-sorting",
+        name: "Different images per cell with sorting",
+        component: DifferentImagesPerCellWithSorting,
         meta: {
             group: "How to draw a grid",
         },
