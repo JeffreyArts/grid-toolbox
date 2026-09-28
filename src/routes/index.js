@@ -25,6 +25,7 @@ import LoadingImage from "./pages/loading-image.vue";
 import RetrievePixelData from "./pages/retrieve-pixel-data.vue";
 import DifferentImagesPerCell from "./pages/different-images-per-cell.vue";
 import DifferentImagesPerCellWithSorting from "./pages/different-images-per-cell-w-sorting.vue";
+import GreyscaleImage from "./pages/greyscale-image.vue";
 
 const routes = [{
         path: "/",
@@ -224,6 +225,14 @@ const routes = [{
         path: "/retrieve-pixel-data",
         name: "Retrieve pixel data",
         component: RetrievePixelData,
+        meta: {
+            group: "Using image data",
+        },
+    },
+    {
+        path: "/greyscale-image",
+        name: "Greyscale image",
+        component: GreyscaleImage,
         meta: {
             group: "Using image data",
         },
