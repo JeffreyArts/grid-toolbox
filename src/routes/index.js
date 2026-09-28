@@ -26,6 +26,7 @@ import RetrievePixelData from "./pages/retrieve-pixel-data.vue";
 import DifferentImagesPerCell from "./pages/different-images-per-cell.vue";
 import DifferentImagesPerCellWithSorting from "./pages/different-images-per-cell-w-sorting.vue";
 import GreyscaleImage from "./pages/greyscale-image.vue";
+import ImageToShapeGrid from "./pages/image-to-shape-grid.vue";
 
 const routes = [{
         path: "/",
@@ -233,6 +234,14 @@ const routes = [{
         path: "/greyscale-image",
         name: "Greyscale image",
         component: GreyscaleImage,
+        meta: {
+            group: "Using image data",
+        },
+    },
+    {
+        path: "/image-to-shape-grid",
+        name: "Image to shape grid",
+        component: ImageToShapeGrid,
         meta: {
             group: "Using image data",
         },

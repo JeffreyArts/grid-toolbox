@@ -62,7 +62,7 @@
 
 .site-menu-list-item {
     color: #fff;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     display: block;
     margin-bottom: 8px;
     width: 100%;
