@@ -27,6 +27,7 @@ import DifferentImagesPerCell from "./pages/different-images-per-cell.vue";
 import DifferentImagesPerCellWithSorting from "./pages/different-images-per-cell-w-sorting.vue";
 import GreyscaleImage from "./pages/greyscale-image.vue";
 import ImageToShapeGrid from "./pages/image-to-shape-grid.vue";
+import CurvedLine from "./pages/curved-line.vue";
 
 const routes = [{
         path: "/",
@@ -82,6 +83,14 @@ const routes = [{
         path: "/polygon",
         name: "Polygon",
         component: Polygon,
+        meta: {
+            group: "Drawing shapes",
+        },
+    },
+    {
+        path: "/curved-line",
+        name: "Curved line",
+        component: CurvedLine,
         meta: {
             group: "Drawing shapes",
         },
