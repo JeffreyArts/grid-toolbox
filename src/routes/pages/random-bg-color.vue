@@ -17,12 +17,24 @@
 
         <aside class="sidebar">
             <div class="options">
-                <div class="option-group" name="Selectables">
+                <div class="option-group" name="RGB kleuren">
                     <div class="option">
-                        <label for="color">
-                            Color
+                        <label for="red">
+                            Red
                         </label>
-                        <input type="color" id="color" v-model="options.color" >
+                        <input type="number" min="0" max="254" id="red" v-model="options.red" >
+                    </div>
+                    <div class="option">
+                        <label for="green">
+                            Green
+                        </label>
+                        <input type="number" min="0" max="254" id="green" v-model="options.green" >
+                    </div>
+                    <div class="option">
+                        <label for="blue">
+                            Blue
+                        </label>
+                        <input type="number" min="0" max="254" id="blue" v-model="options.blue" >
                     </div>
 
                     <button class="button" @click="regenerateColor">Change color</button>
@@ -90,13 +102,22 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                rectangleHeight: 100,
-                rectangleWidth: 100,
+                red: 100,
+                green: 100,
+                blue: 100,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
+    computed: {
+        color() {
+            return `rgb(${this.options.red}, ${this.options.green}, ${this.options.blue})`
+        }
+    },
     watch: {
+        "options.red": { handler() { this.updateCanvas()} },
+        "options.green": { handler() { this.updateCanvas()} },
+        "options.blue": { handler() { this.updateCanvas()} },
         "options.rectangleHeight": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const height = ${oldValue}`,`const height = ${value}`)
@@ -152,7 +173,9 @@ export default {
             const green = Math.floor(Math.random()*255)
             const blue = Math.floor(Math.random()*255)
 
-            this.options.color = `rgb(${red}, ${green}, ${blue})`
+            this.options.red = red
+            this.options.green = green
+            this.options.blue = blue
         },  
         drawRectangle() {
             const ctx = this.canvas.ctx
@@ -165,7 +188,7 @@ export default {
             ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
 
             // Bepaal de kleur van de stippen
-            const color = this.options.color  
+            const color = this.color  
             ctx.fillStyle = color;
             
             // Bepaal het formaat van de rechthoek
