@@ -28,6 +28,7 @@ import DifferentImagesPerCellWithSorting from "./pages/different-images-per-cell
 import GreyscaleImage from "./pages/greyscale-image.vue";
 import ImageToShapeGrid from "./pages/image-to-shape-grid.vue";
 import CurvedLine from "./pages/curved-line.vue";
+import GridArray from "./pages/array-grid.vue"
 
 const routes = [{
         path: "/",
@@ -155,6 +156,14 @@ const routes = [{
         path: "/cell-size-plus-shape-size",
         name: "Cell size + Shape size",
         component: CellSizePlusShapeSize,
+        meta: {
+            group: "How to draw a grid",
+        },
+    },
+    {
+        path: "/grid-array",
+        name: "Grid from 2-dimensional array (a matrix)",
+        component: GridArray,
         meta: {
             group: "How to draw a grid",
         },
