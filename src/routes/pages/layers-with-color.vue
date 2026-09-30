@@ -120,8 +120,8 @@ drawLayer1(color = "black") {
     ctx.fillStyle = color  
     
     // Helper variabelen om de code beter leesbaar te houden
-    const width = this.canvas.width/2
-    const height = this.canvas.height/2
+    const width = canvas.width/2
+    const height = canvas.height/2
     
     // Maak paden voor de 2 vierkantjes
     ctx.beginPath()
@@ -142,7 +142,7 @@ drawLayer2(color = "black") {
     // Helper variabelen om de code beter leesbaar te houden
     const x = canvas.width/2
     const y = canvas.height/2
-    const radius = this.canvas.width/2
+    const radius = canvas.width/2
     
     ctx.beginPath()
     ctx.ellipse(x, y, radius, radius, 0, 0, Math.PI * 2)
@@ -153,7 +153,7 @@ drawLayer2(color = "black") {
 drawLayer3(color = "black") {
     
     // Update de kleur
-    const ctx = this.canvas.ctx
+    const ctx = canvas.ctx
 
     // Maak pad voor de driehoek
     ctx.fillStyle = color  
@@ -161,8 +161,8 @@ drawLayer3(color = "black") {
     // Begin linksbovenin, dan naar rechts & tot slot naar linksonder
     ctx.beginPath()
     ctx.moveTo(0,0)
-    ctx.lineTo(this.canvas.width, 0)
-    ctx.lineTo(0,this.canvas.height)
+    ctx.lineTo(canvas.width, 0)
+    ctx.lineTo(0,canvas.height)
     ctx.fill()
 }
 
@@ -173,12 +173,12 @@ drawLayer3(color = "black") {
 // aanroept om de verschillende lagen te tekenen.
 updateCanvas() {
     // Reset canvas, zodat deze weer leeg is
-    ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+    ctx.clearRect(0,0,canvas.width, canvas.height)
 
     // Teken de lagen
-    if (layer1.show) { this.drawLayer1(layer1.color) }
-    if (layer2.show) { this.drawLayer1(layer2.color) }
-    if (layer3.show) { this.drawLayer1(layer3.color) }
+    if (layer1.show) { drawLayer1(layer1.color) }
+    if (layer2.show) { drawLayer1(layer2.color) }
+    if (layer3.show) { drawLayer1(layer3.color) }
 }
 
 `

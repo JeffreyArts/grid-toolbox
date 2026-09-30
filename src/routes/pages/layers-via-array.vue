@@ -123,7 +123,7 @@ const drawLayer3(...) {...}
 
 updateCanvas() {
     // Reset canvas, zodat deze weer leeg is
-    ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+    ctx.clearRect(0,0,canvas.width, canvas.height)
 
     // Teken de lagen
     for (const layer of layers) {
@@ -135,11 +135,11 @@ updateCanvas() {
         }
 
         if (layer.type === 1) {
-            this.drawLayer1(layer)
+            drawLayer1(layer)
         } else if (layer.type === 2) {
-            this.drawLayer2(layer)
+            drawLayer2(layer)
         } else if (layer.type === 3) {
-            this.drawLayer3(layer)
+            drawLayer3(layer)
         }
     }
 }

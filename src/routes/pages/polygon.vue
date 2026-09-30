@@ -79,8 +79,8 @@ ctx.fillStyle = "#f93e3e";
 const points = 5
 const radius = 320
 const drawChunks = false
-const startX = this.canvas.width / 2 
-const startY = this.canvas.height / 2 
+const startX = canvas.width / 2 
+const startY = canvas.height / 2 
 
 // Een chunk is hier de afstand tussen 2 punten op de rand van de cirkel
 // Zet drawChunks aan om een beter beeld te krijgen van wat dit betekend

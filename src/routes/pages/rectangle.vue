@@ -65,14 +65,14 @@ const width = 100
 const height = 100
 
 // De x & y positie in de rect functie is het startpunt waar de width & height bij opgeteld worden
-const x = this.canvas.width/2 - width/2
-const y = this.canvas.height/2 - height/2
+const x = canvas.width/2 - width/2
+const y = canvas.height/2 - height/2
 
 // Zeg eerst dat je een nieuwe lijn wilt gaan beginnen
 ctx.beginPath()
 
 // Maak het canvas schoon
-ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+ctx.clearRect(0,0,canvas.width, canvas.height)
 
 // Teken een lijn in de vorm van een rechthoek
 // rect(x, y, breedte, hoogte)

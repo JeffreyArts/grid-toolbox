@@ -69,7 +69,7 @@ const diameter = 32
 
 const drawShape = (x, y, diameter) {
 
-    if (this.options.shape == "circle") {
+    if (options.shape == "circle") {
 
         const radius = diameter / 2
 

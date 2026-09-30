@@ -84,8 +84,8 @@ const hasXOffset = true
 const shape = "circle"
 const radius = diameter/2
 
-for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
-    for (let y = 0; y < this.canvas.height + diameter; y+= diameter) {
+for (let x = 0; x < canvas.width + diameter; x+= diameter) {
+    for (let y = 0; y < canvas.height + diameter; y+= diameter) {
         ctx.beginPath()
 
         // Check of het een even rij is
@@ -93,12 +93,12 @@ for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
 
         // Als het een oneven rij is, dan teken pas je de x positie iets naar links aan
         if (!isEven && hasXOffset) {
-            this.drawShape(x - radius, y, diameter)
+            drawShape(x - radius, y, diameter)
             continue;
         } 
 
         // Als het een even rij is, dan teken je hem gewoon normaal
-        this.drawShape(x, y, diameter)
+        drawShape(x, y, diameter)
     }
 }          
 

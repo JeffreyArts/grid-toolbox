@@ -122,10 +122,10 @@ const radius = diameter/2
  * 
  *******/
 
- for (let x = 0; x < this.canvas.width + diameter; x+= diameter) {
+ for (let x = 0; x < canvas.width + diameter; x+= diameter) {
  
     const isEvenX = x/diameter % 2
-    for (let y = 0; y < this.canvas.height + diameter; y+= diameter) {
+    for (let y = 0; y < canvas.height + diameter; y+= diameter) {
         const isEvenY = y/diameter % 2
 
         // Extra variabelen om de locaties van de x & y posities te onthouden

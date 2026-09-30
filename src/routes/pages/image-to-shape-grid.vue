@@ -154,18 +154,18 @@ const image = document.getElementById("sourceImage")
 
 // Converteer afbeelding naar greyscale 
 // (let op! hier wordt de context gebruikt ipv het canvas element)
-const greyScaleCTX = this.generateGreyScale(image)
+const greyScaleCTX = generateGreyScale(image)
 
-for (let x = 0; x < this.canvas.width + cellWidth; x+= cellWidth) {
+for (let x = 0; x < canvas.width + cellWidth; x+= cellWidth) {
     const isEvenX = x/cellWidth % 2
-    for (let y = 0; y < this.canvas.height + cellHeight; y+= cellHeight) {
+    for (let y = 0; y < canvas.height + cellHeight; y+= cellHeight) {
         ctx.beginPath()
 
         // Converteer greyscale waarde naar percentage
-        const size = this.getPixelData(x, y, greyScaleCanvas)
+        const size = getPixelData(x, y, greyScaleCanvas)
 
         // Gebruik het percentage om de afmetingen van de vorm te bepalen
-        this.drawShape(finalX, finalY, this.options.cellWidth * size, this.options.cellHeight * size)
+        drawShape(finalX, finalY, options.cellWidth * size, options.cellHeight * size)
 
         ctx.fill()
     }

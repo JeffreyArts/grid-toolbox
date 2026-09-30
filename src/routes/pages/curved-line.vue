@@ -160,7 +160,7 @@ const showHandles = true
 const drawCurvedLine() {
 
     // Maak het canvas schoon
-    ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+    ctx.clearRect(0,0,canvas.width, canvas.height)
     
     // De code in dit if-statement kun je overslaan
     // Dit tekent de gele & rode stip om de hendels van de beziers
@@ -197,11 +197,11 @@ const drawCurvedLine() {
     ////////////////////////
 
     // Bepaal de kleur van de lijn
-    const color = this.options.color  
+    const color = options.color  
     ctx.strokeStyle = color;
     
     // Bepaal de dikte van de lijn
-    const thickness = this.options.lineThickness
+    const thickness = options.lineThickness
     ctx.lineWidth = thickness
 
     // Begin een nieuw pad

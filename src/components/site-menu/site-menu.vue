@@ -2,7 +2,7 @@
 <template>
     <div class="site-menu-container">
         <div class="site-menu">
-            <router-link to="/" class="site-menu-title">Grid Toolbox</router-link>
+            <router-link to="/" class="site-menu-title">Digitale reproductie</router-link>
 
             <div class="site-menu-list">
                 <div class="site-menu-group" v-for="(groupRoutes, groupName) in groupedRoutes" :key="groupName">

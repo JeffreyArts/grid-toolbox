@@ -220,7 +220,7 @@ const drawLayer2(options = { color: "black", diameter: 100 }) {
     const radius = options.diameter/2
     
     ctx.beginPath()
-    ctx.ellipse(this.canvas.width/2, this.canvas.height/2, radius, radius, 0, 0, Math.PI * 2 )
+    ctx.ellipse(canvas.width/2, canvas.height/2, radius, radius, 0, 0, Math.PI * 2 )
     ctx.fill()
 }
 
@@ -240,25 +240,25 @@ const drawLayer3(options = { color: "black", diagonalPosition: "tl" }) {
     // tl = Top left
     if (pos == "tl") {
         ctx.moveTo(0,0)
-        ctx.lineTo(this.canvas.width, 0)
-        ctx.lineTo(0,this.canvas.height)
+        ctx.lineTo(canvas.width, 0)
+        ctx.lineTo(0,canvas.height)
 
     // tr = Top right
     } else if (pos == "tr") {
         ctx.moveTo(0,0)
-        ctx.lineTo(this.canvas.width, 0)
-        ctx.lineTo(this.canvas.width, this.canvas.height)
+        ctx.lineTo(canvas.width, 0)
+        ctx.lineTo(canvas.width, canvas.height)
 
     // br = Bottom right
     } else if (pos == "br") {
-        ctx.moveTo(this.canvas.width,0)
-        ctx.lineTo(this.canvas.width, this.canvas.height)
-        ctx.lineTo(0,this.canvas.height)
+        ctx.moveTo(canvas.width,0)
+        ctx.lineTo(canvas.width, canvas.height)
+        ctx.lineTo(0,canvas.height)
 
     // bl = Bottom left
     } else if (pos == "bl") {
-        ctx.moveTo(this.canvas.width, this.canvas.height)
-        ctx.lineTo(0, this.canvas.height)
+        ctx.moveTo(canvas.width, canvas.height)
+        ctx.lineTo(0, canvas.height)
         ctx.lineTo(0, 0)
     } 
 
@@ -271,12 +271,12 @@ const drawLayer3(options = { color: "black", diagonalPosition: "tl" }) {
 ////////////////////////
 updateCanvas() {
     // Reset canvas, zodat deze weer leeg is
-    ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+    ctx.clearRect(0,0,canvas.width, canvas.height)
 
     // Teken de lagen
-    if (layer1.show) { this.drawLayer1({ color: layer1.color, amountOfSquares: layer1.amountOfSquares, size: layer1.size }) }
-    if (layer2.show) { this.drawLayer2({ color: layer2.color, diameter: layer2.diameter }) }
-    if (layer3.show) { this.drawLayer3({ color: layer3.color, diagonalPosition: layer3.diagonalPosition }) }
+    if (layer1.show) { drawLayer1({ color: layer1.color, amountOfSquares: layer1.amountOfSquares, size: layer1.size }) }
+    if (layer2.show) { drawLayer2({ color: layer2.color, diameter: layer2.diameter }) }
+    if (layer3.show) { drawLayer3({ color: layer3.color, diagonalPosition: layer3.diagonalPosition }) }
 }
 
 `

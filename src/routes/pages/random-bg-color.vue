@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Plus</h1>
+            <h1>Random background color</h1>
             <hr>
         </header>
 
@@ -18,43 +18,17 @@
         <aside class="sidebar">
             <div class="options">
                 <div class="option-group" name="Selectables">
-
-                    <div class="option">
-                        <label for="range">
-                            Plus width
-                        </label>
-                        <input type="range" min="1" max="480" step="1" v-model.number="options.rectangleWidth">
-                        <!-- optional number display-->
-                        <input type="number"  min="8" max="480" v-model.number="options.rectangleWidth">
-                    </div>
-                    <div class="option">
-                        <label for="range">
-                            Plus height
-                        </label>
-                        <input type="range" min="1" max="480" step="1" v-model.number="options.rectangleHeight">
-                        <!-- optional number display-->
-                        <input type="number"  min="8" max="480" v-model.number="options.rectangleHeight">
-                    </div>
-                    <div class="option">
-                        <label for="range">
-                            Plus thickness
-                        </label>
-                        <input type="range" min="1" :max="Math.min(options.rectangleHeight, options.rectangleWidth)" step="1" v-model.number="options.rectangleThickness">
-                        <!-- optional number display-->
-                        <input type="number"  min="1" :max="Math.min(options.rectangleHeight, options.rectangleWidth)" v-model.number="options.rectangleThickness">
-
-                        {{ options.rectangleThickness }}
-                    </div>
-
                     <div class="option">
                         <label for="color">
                             Color
                         </label>
                         <input type="color" id="color" v-model="options.color" >
                     </div>
+
+                    <button class="button" @click="regenerateColor">Change color</button>
+                    <br>
+                    <br>
                 </div>
-
-
             </div>
         </aside>
     </div>
@@ -69,33 +43,34 @@ const codeSnippet =
 const canvas = getElementById("canvas")
 const ctx = canvas.el.getContext("2d");
 
-// Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
-ctx.fillStyle = "#f93e3e";
-const width = 100
-const height = 100
-const thickness = 16
+// RGB waarden kunnen een waarde hebben van 0 tot en met 254
+regenerateColor() {
+    const red = Math.floor(Math.random()*255)
+    const green = Math.floor(Math.random()*255)
+    const blue = Math.floor(Math.random()*255)
 
-// De x & y positie in de rect functie is het startpunt waar de width & height bij opgeteld worden
-const x = canvas.width/2 - width/2
-const y = canvas.height/2 - height/2
+    return \`rgb(\${red}, \${green}, \${blue})\`
+}
+
+// Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
+ctx.fillStyle = regenerateColor();
+const width = canvas.width
+const height = canvas.height
 
 // Zeg eerst dat je een nieuwe lijn wilt gaan beginnen
 ctx.beginPath()
 
-// Bepaal het formaat van de rechthoeken
-const width = options.rectangleWidth
-const height = options.rectangleHeight
-const thickness = options.rectangleThickness
+// Maak het canvas schoon
+ctx.clearRect(0,0,canvas.width, canvas.height)
 
-// Horizontale lijn
-const x_hor = canvas.width/2 - width/2
-const y_hor = canvas.height/2 - thickness/2
-ctx.rect( x_hor, y_hor, width, thickness)
-
-// Verticale lijn
-const x_vert = canvas.width/2 - thickness/2
-const y_vert = canvas.height/2 - height/2
-ctx.rect( x_vert, y_vert, thickness, height)
+// Teken een lijn in de vorm van een rechthoek
+// rect(x, y, breedte, hoogte)
+ctx.rect( 
+    0,
+    0,
+    width,
+    height
+)
 
 // Vul de lijn van de cirkel met de geselecteerde kleur 
 ctx.fill()
@@ -117,7 +92,6 @@ export default {
             options: {
                 rectangleHeight: 100,
                 rectangleWidth: 100,
-                rectangleThickness: 16,
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
@@ -126,8 +100,6 @@ export default {
         "options.rectangleHeight": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const height = ${oldValue}`,`const height = ${value}`)
-                this.options.rectangleThickness = Math.min(this.options.rectangleHeight, this.options.rectangleThickness)
-
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
@@ -139,19 +111,6 @@ export default {
         "options.rectangleWidth": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const width = ${oldValue}`,`const width = ${value}`)
-                this.options.rectangleThickness = Math.min(this.options.rectangleWidth, this.options.rectangleThickness)
-
-                if (this.canvas.ctx) {
-                    this.updateCanvas()
-                } else {
-                    setTimeout(this.updateCanvas)
-                }
-            },
-            immediate: true
-        },
-        "options.rectangleThickness": {
-            handler(value,oldValue) {
-                this.codeSnippet = this.codeSnippet.replace(`const thickness = ${oldValue}`,`const thickness = ${value}`)
                 if (this.canvas.ctx) {
                     this.updateCanvas()
                 } else {
@@ -188,7 +147,14 @@ export default {
             canvas.height = this.canvas.height
 
         },
-        drawPlus() {
+        regenerateColor() {
+            const red = Math.floor(Math.random()*255)
+            const green = Math.floor(Math.random()*255)
+            const blue = Math.floor(Math.random()*255)
+
+            this.options.color = `rgb(${red}, ${green}, ${blue})`
+        },  
+        drawRectangle() {
             const ctx = this.canvas.ctx
             if (!ctx) {
                 console.error("Can not find canvas context")
@@ -202,27 +168,20 @@ export default {
             const color = this.options.color  
             ctx.fillStyle = color;
             
-            // Bepaal het formaat van de rechthoeken
-            const width = this.options.rectangleWidth
-            const height = this.options.rectangleHeight
-            const thickness = this.options.rectangleThickness
+            // Bepaal het formaat van de rechthoek
+            const width = this.canvas.width
+            const height = this.canvas.height
+            const x = 0
+            const y = 0
             
             ctx.beginPath()
-
-            // Horizontale lijn
-            const x_hor = this.canvas.width/2 - width/2
-            const y_hor = this.canvas.height/2 - thickness/2
-            ctx.rect( x_hor, y_hor, width, thickness)
-            
-            // Verticale lijn
-            const x_vert = this.canvas.width/2 - thickness/2
-            const y_vert = this.canvas.height/2 - height/2
-            ctx.rect( x_vert, y_vert, thickness, height)
-
+            ctx.rect( x, y, width, height)
             ctx.fill()
+            
+
         },
         updateCanvas() {
-            this.drawPlus()
+            this.drawRectangle()
         },
         drawBackgroundColor(color) {
             const ctx = this.canvas.ctx

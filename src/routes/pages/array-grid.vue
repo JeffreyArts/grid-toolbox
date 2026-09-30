@@ -100,7 +100,7 @@ const cellHeight = this.canvas.height/5
 
 
 // We loopen door de waarden van de array grid heen
-// Let op! We beginnen met de kolommen, daarin de rijen
+// Let op! We beginnen met de kolommen, daarin behandelen we de rijen
 grid.forEach((column, y) => {
     column.forEach((value, x) => {
         // De indexes van de array kunnen we vermenigvuldigen met de 
@@ -255,7 +255,7 @@ export default {
 
 
             // We loopen door de waarden van de array grid heen
-            // Let op! We beginnen met de kolommen, daarin de rijen
+            // Let op! We beginnen met de kolommen, daarin behandelen we de rijen
             grid.forEach((column, y) => {
                 column.forEach((value, x) => {
                     // De indexes van de array kunnen we vermenigvuldigen met de 

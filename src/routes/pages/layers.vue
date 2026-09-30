@@ -104,8 +104,8 @@ drawLayer1() {
     ctx.fillStyle = color  
     
     // Helper variabelen om de code beter leesbaar te houden
-    const width = this.canvas.width/2
-    const height = this.canvas.height/2
+    const width = canvas.width/2
+    const height = canvas.height/2
     
     // Maak paden voor de 2 vierkantjes
     ctx.beginPath()
@@ -124,7 +124,7 @@ drawLayer2() {
     // Helper variabelen om de code beter leesbaar te houden
     const x = canvas.width/2
     const y = canvas.height/2
-    const radius = this.canvas.width/2
+    const radius = canvas.width/2
     
     ctx.beginPath()
     ctx.ellipse(x, y, radius, radius, 0, 0, Math.PI * 2)
@@ -133,7 +133,7 @@ drawLayer2() {
     
 // Laag3 tekent een half vierkant (diagonaal)
 drawLayer3() {
-    const ctx = this.canvas.ctx
+    const ctx = canvas.ctx
 
     // Maak pad voor de driehoek
     ctx.fillStyle = color  
@@ -141,27 +141,27 @@ drawLayer3() {
     // Begin linksbovenin, dan naar rechts & tot slot naar linksonder
     ctx.beginPath()
     ctx.moveTo(0,0)
-    ctx.lineTo(this.canvas.width, 0)
-    ctx.lineTo(0,this.canvas.height)
+    ctx.lineTo(canvas.width, 0)
+    ctx.lineTo(0,canvas.height)
     ctx.fill()
 }
 
 // 1 Centrale functie die het canvas reset, en de verschillende functies
 // aanroept om de verschillende lagen te tekenen.
 updateCanvas() {
-    const ctx = this.canvas.ctx
+    const ctx = canvas.ctx
     if (!ctx) {
         console.error("Can not find canvas context")
         return 
     }
 
     // Reset canvas, zodat deze weer leeg is
-    ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+    ctx.clearRect(0,0,canvas.width, canvas.height)
 
     // Teken laag 1 (als dat moet)
-    if (showLayer1) { this.drawLayer1()}
-    if (showLayer2) { this.drawLayer2()}
-    if (showLayer3) { this.drawLayer3()}
+    if (showLayer1) { drawLayer1()}
+    if (showLayer2) { drawLayer2()}
+    if (showLayer3) { drawLayer3()}
 },
 
 

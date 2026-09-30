@@ -29,6 +29,7 @@ import GreyscaleImage from "./pages/greyscale-image.vue";
 import ImageToShapeGrid from "./pages/image-to-shape-grid.vue";
 import CurvedLine from "./pages/curved-line.vue";
 import GridArray from "./pages/array-grid.vue"
+import RandomBackgroundColor from "./pages/random-bg-color.vue"
 
 const routes = [{
         path: "/",
@@ -262,6 +263,14 @@ const routes = [{
         component: ImageToShapeGrid,
         meta: {
             group: "Using image data",
+        },
+    },
+    {
+        path: "/random-background-color",
+        name: "Random background color",
+        component: RandomBackgroundColor,
+        meta: {
+            group: "Randomness",
         },
     },
 
