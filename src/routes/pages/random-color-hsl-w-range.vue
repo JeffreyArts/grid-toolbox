@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Random color RGB + range</h1>
+            <h1>Random color HSL + range</h1>
             <hr>
         </header>
 
@@ -21,69 +21,69 @@
 
                     <div class="row">
                         <div class="option">
-                            <label for="red">
-                                Red
+                            <label for="hue">
+                                Hue
                             </label>
-                            <input type="number" :min="options.red.min" :max="options.red.max" id="red" v-model="options.red.v" >
+                            <input type="number" :min="options.hue.min" :max="options.hue.max" id="hue" v-model="options.hue.v" >
                         </div> 
                         
                         <div class="option">
-                            <label for="red-min">
+                            <label for="hue-min">
                                 Min
                             </label>
-                            <input type="number" min="0" :max="options.red.max" id="red-min" v-model="options.red.min" >
+                            <input type="number" min="0" :max="options.hue.max" id="hue-min" v-model="options.hue.min" >
                         </div> 
 
                         <div class="option">
-                            <label for="red-max">
+                            <label for="hue-max">
                                 Max
                             </label>
-                            <input type="number" :min="options.red.min" max="255" id="red-max" v-model="options.red.max" >
+                            <input type="number" :min="options.hue.min" max="360" id="hue-max" v-model="options.hue.max" >
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="option">
-                            <label for="green">
-                                Green
+                            <label for="saturation">
+                                Saturation
                             </label>
-                            <input type="number" :min="options.green.min" :max="options.green.max" id="green" v-model="options.green.v" >
+                            <input type="number" :min="options.saturation.min" :max="options.saturation.max" id="saturation" v-model="options.saturation.v" >
                         </div>
 
                         <div class="option">
-                            <label for="green">
+                            <label for="saturation">
                                 Min
                             </label>
-                            <input type="number" min="0" :max="options.green.max" id="green" v-model="options.green.min" >
+                            <input type="number" min="0" :max="options.saturation.max" id="saturation" v-model="options.saturation.min" >
                         </div>
 
                         <div class="option">
-                            <label for="green">
+                            <label for="saturation">
                                 Max
                             </label>
-                            <input type="number" :min="options.green.min" max="255" id="green" v-model="options.green.max" >
+                            <input type="number" :min="options.saturation.min" max="100" id="saturation" v-model="options.saturation.max" >
                         </div>
 
                     </div>
 
                     <div class="row">
                         <div class="option">
-                            <label for="blue">
-                                Blue
+                            <label for="lightness">
+                                Lightness
                             </label>
-                            <input type="number" :min="options.blue.min" :max="options.blue.max" id="blue" v-model="options.blue.v" >
+                            <input type="number" :min="options.lightness.min" :max="options.lightness.max" id="lightness" v-model="options.lightness.v" >
                         </div>
                         <div class="option">
-                            <label for="blue">
+                            <label for="lightness">
                                 Min
                             </label>
-                            <input type="number" min="0" :max="options.blue.max" id="blue" v-model="options.blue.min" >
+                            <input type="number" min="0" :max="options.lightness.max" id="lightness" v-model="options.lightness.min" >
                         </div>
                         <div class="option">
-                            <label for="blue">
+                            <label for="lightness">
                                 Max
                             </label>
-                            <input type="number" :min="options.blue.min" max="255" id="blue" v-model="options.blue.max" >
+                            <input type="number" :min="options.lightness.min" max="100" id="lightness" v-model="options.lightness.max" >
                         </div>
                     </div>
 
@@ -105,18 +105,20 @@ const codeSnippet =
 const canvas = getElementById("canvas")
 const ctx = canvas.el.getContext("2d");
 
-// RGB waarden kunnen een waarde hebben van 0 tot en met 255
-// Met deze functie kun je een minimale en maximale waarde meegeven voor de RGB waarden
+// HSL staat voor Hue, Saturation & Lightness
+// Hue is een waarde tussen 0-360 (graden)
+// Saturation is het percentage van de kleurintensiteit (0% - 100%)
+// Lightness bepaal je hoe donker (0%) of hoe licht (100%) de kleur is
 generateColorWithinRange() {
-    let red   = {min: 100, max: 128}
-    let green = {min: 0,   max: 32}
-    let blue  = {min: 200, max: 255}
+    let hue   = {min: 0, max: 360}
+    let saturation = {min: 0,   max: 100}
+    let lightness  = {min: 0, max: 100}
 
-    const red = Math.floor(Math.random() * (red.max - red.min) + red.min) 
-    const green = Math.floor(Math.random() * (green.max - green.min) + green.min) 
-    const blue = Math.floor(Math.random() * (blue.max - blue.min) + blue.min) 
+    const hue = Math.floor(Math.random() * (hue.max - hue.min) + hue.min) 
+    const saturation = Math.floor(Math.random() * (saturation.max - saturation.min) + saturation.min) 
+    const lightness = Math.floor(Math.random() * (lightness.max - lightness.min) + lightness.min) 
 
-    return \`rgb(\${red}, \${green}, \${blue})\`
+    return \`hsl(\${hue} \${saturation} \${lightness})\`
 }
 
 // Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
@@ -157,22 +159,22 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                red: {v:100, min: 100, max: 128},
-                green: {v:10, min: 0, max: 32},
-                blue: {v:200, min: 200, max: 255},
+                hue: {v:280, min: 280, max: 320},
+                saturation: {v:90, min: 80, max: 100},
+                lightness: {v:50, min: 40, max: 50},
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     computed: {
         color() {
-            return `rgb(${this.options.red.v}, ${this.options.green.v}, ${this.options.blue.v})`
+            return `hsl(${this.options.hue.v} ${this.options.saturation.v} ${this.options.lightness.v})`
         }
     },
     watch: {
-        "options.red.v": { handler() { this.updateCanvas()} },
-        "options.green.v": { handler() { this.updateCanvas()} },
-        "options.blue": { handler() { this.updateCanvas()} },
+        "options.hue.v": { handler() { this.updateCanvas()} },
+        "options.saturation.v": { handler() { this.updateCanvas()} },
+        "options.lightness": { handler() { this.updateCanvas()} },
         "options.rectangleHeight": {
             handler(value,oldValue) {
                 this.codeSnippet = this.codeSnippet.replace(`const height = ${oldValue}`,`const height = ${value}`)
@@ -224,15 +226,15 @@ export default {
 
         },
         regenerateColor() {
-            const red = Math.floor(Math.random() * (this.options.red.max - this.options.red.min) + this.options.red.min) 
-            const green = Math.floor(Math.random() * (this.options.green.max - this.options.green.min) + this.options.green.min) 
-            const blue = Math.floor(Math.random() * (this.options.blue.max - this.options.blue.min) + this.options.blue.min) 
+            const hue = Math.floor(Math.random() * (this.options.hue.max - this.options.hue.min) + this.options.hue.min) 
+            const saturation = Math.floor(Math.random() * (this.options.saturation.max - this.options.saturation.min) + this.options.saturation.min) 
+            const lightness = Math.floor(Math.random() * (this.options.lightness.max - this.options.lightness.min) + this.options.lightness.min) 
 
-            this.options.red.v = red
-            this.options.green.v = green
-            this.options.blue.v = blue
+            this.options.hue.v = hue
+            this.options.saturation.v = saturation
+            this.options.lightness.v = lightness
 
-            this.options.color = `rgb(${this.options.red.v}, ${this.options.green.v}, ${this.options.blue.v})`
+            this.options.color = `hsl(${this.options.hue.v} ${this.options.saturation.v} ${this.options.lightness.v})`
         },  
         drawRectangle() {
             const ctx = this.canvas.ctx

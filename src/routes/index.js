@@ -31,6 +31,8 @@ import CurvedLine from "./pages/curved-line.vue";
 import GridArray from "./pages/array-grid.vue"
 import RandomColorRGB from "./pages/random-bg-color-rgb.vue"
 import RandomColorRGBRange from "./pages/random-bg-color-rgb-w-range.vue"
+import RandomColorHSL from "./pages/random-color-hsl.vue"
+import RandomColorHSLRange from "./pages/random-color-hsl-w-range.vue"
 
 const routes = [{
         path: "/",
@@ -278,6 +280,22 @@ const routes = [{
         path: "/random-background-color-rgb-range",
         name: "Random color RGB within range",
         component: RandomColorRGBRange,
+        meta: {
+            group: "Randomness",
+        },
+    },
+    {
+        path: "/random-color-hsl",
+        name: "Random color HSL",
+        component: RandomColorHSL,
+        meta: {
+            group: "Randomness",
+        },
+    },
+    {
+        path: "/random-color-hsl-range",
+        name: "Random color HSL within range",
+        component: RandomColorHSLRange,
         meta: {
             group: "Randomness",
         },
