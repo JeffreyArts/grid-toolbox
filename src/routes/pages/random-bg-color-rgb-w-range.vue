@@ -2,7 +2,7 @@
 
     <div class="canvas-view">
         <header class="title">
-            <h1>Random background color</h1>
+            <h1>Random color RGB + range</h1>
             <hr>
         </header>
 
@@ -12,29 +12,79 @@
             </div>
 
             <highlightjs language="js" :code="codeSnippet" />
-            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rect">Details rect functie</a>
+            <!-- <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rect">Details rect functie</a> -->
         </section>
 
         <aside class="sidebar">
             <div class="options">
                 <div class="option-group" name="RGB kleuren">
-                    <div class="option">
-                        <label for="red">
-                            Red
-                        </label>
-                        <input type="number" min="0" max="254" id="red" v-model="options.red" >
+
+                    <div class="row">
+                        <div class="option">
+                            <label for="red">
+                                Red
+                            </label>
+                            <input type="number" :min="options.red.min" :max="options.red.max" id="red" v-model="options.red.v" >
+                        </div> 
+                        
+                        <div class="option">
+                            <label for="red-min">
+                                Min
+                            </label>
+                            <input type="number" min="0" :max="options.red.max" id="red-min" v-model="options.red.min" >
+                        </div> 
+
+                        <div class="option">
+                            <label for="red-max">
+                                Max
+                            </label>
+                            <input type="number" :min="options.red.min" max="255" id="red-max" v-model="options.red.max" >
+                        </div>
                     </div>
-                    <div class="option">
-                        <label for="green">
-                            Green
-                        </label>
-                        <input type="number" min="0" max="254" id="green" v-model="options.green" >
+                    
+                    <div class="row">
+                        <div class="option">
+                            <label for="green">
+                                Green
+                            </label>
+                            <input type="number" :min="options.green.min" :max="options.green.max" id="green" v-model="options.green.v" >
+                        </div>
+
+                        <div class="option">
+                            <label for="green">
+                                Min
+                            </label>
+                            <input type="number" min="0" :max="options.green.max" id="green" v-model="options.green.min" >
+                        </div>
+
+                        <div class="option">
+                            <label for="green">
+                                Max
+                            </label>
+                            <input type="number" :min="options.green.min" max="255" id="green" v-model="options.green.max" >
+                        </div>
+
                     </div>
-                    <div class="option">
-                        <label for="blue">
-                            Blue
-                        </label>
-                        <input type="number" min="0" max="254" id="blue" v-model="options.blue" >
+
+                    <div class="row">
+                        <div class="option">
+                            <label for="blue">
+                                Blue
+                            </label>
+                            <input type="number" :min="options.blue.min" :max="options.blue.max" id="blue" v-model="options.blue.v" >
+                        </div>
+                        <div class="option">
+                            <label for="blue">
+                                Min
+                            </label>
+                            <input type="number" min="0" :max="options.blue.max" id="blue" v-model="options.blue.min" >
+                        </div>
+                        <div class="option">
+                            <label for="blue">
+                                Max
+                            </label>
+                            <input type="number" :min="options.blue.min" max="255" id="blue" v-model="options.blue.max" >
+                        </div>
                     </div>
 
                     <button class="button" @click="regenerateColor">Change color</button>
@@ -55,17 +105,22 @@ const codeSnippet =
 const canvas = getElementById("canvas")
 const ctx = canvas.el.getContext("2d");
 
-// RGB waarden kunnen een waarde hebben van 0 tot en met 254
-regenerateColor() {
-    const red = Math.floor(Math.random()*255)
-    const green = Math.floor(Math.random()*255)
-    const blue = Math.floor(Math.random()*255)
+// RGB waarden kunnen een waarde hebben van 0 tot en met 255
+// Met deze functie kun je een minimale en maximale waarde meegeven voor de RGB waarden
+generateColorWithinRange() {
+    let red   = {min: 100, max: 128}
+    let green = {min: 0,   max: 32}
+    let blue  = {min: 200, max: 255}
+
+    const red = Math.floor(Math.random() * (red.max - red.min) + red.min) 
+    const green = Math.floor(Math.random() * (green.max - green.min) + green.min) 
+    const blue = Math.floor(Math.random() * (blue.max - blue.min) + blue.min) 
 
     return \`rgb(\${red}, \${green}, \${blue})\`
 }
 
 // Bepaal vooraf de kleur waarmee de vorm gevuld moet worden
-ctx.fillStyle = regenerateColor();
+ctx.fillStyle = generateColorWithinRange();
 const width = canvas.width
 const height = canvas.height
 
@@ -102,21 +157,21 @@ export default {
                 height: 960 // in pixels
             },
             options: {
-                red: 100,
-                green: 100,
-                blue: 100,
+                red: {v:100, min: 100, max: 128},
+                green: {v:10, min: 0, max: 32},
+                blue: {v:200, min: 200, max: 255},
                 color: getComputedStyle(document.documentElement).getPropertyValue('--accentColor').trim()                
             }
         }
     },
     computed: {
         color() {
-            return `rgb(${this.options.red}, ${this.options.green}, ${this.options.blue})`
+            return `rgb(${this.options.red.v}, ${this.options.green.v}, ${this.options.blue.v})`
         }
     },
     watch: {
-        "options.red": { handler() { this.updateCanvas()} },
-        "options.green": { handler() { this.updateCanvas()} },
+        "options.red.v": { handler() { this.updateCanvas()} },
+        "options.green.v": { handler() { this.updateCanvas()} },
         "options.blue": { handler() { this.updateCanvas()} },
         "options.rectangleHeight": {
             handler(value,oldValue) {
@@ -169,13 +224,13 @@ export default {
 
         },
         regenerateColor() {
-            const red = Math.floor(Math.random()*255)
-            const green = Math.floor(Math.random()*255)
-            const blue = Math.floor(Math.random()*255)
+            const red = Math.floor(Math.random() * (this.options.red.max - this.options.red.min) + this.options.red.min) 
+            const green = Math.floor(Math.random() * (this.options.green.max - this.options.green.min) + this.options.green.min) 
+            const blue = Math.floor(Math.random() * (this.options.blue.max - this.options.blue.min) + this.options.blue.min) 
 
-            this.options.red = red
-            this.options.green = green
-            this.options.blue = blue
+            this.options.red.v = red
+            this.options.green.v = green
+            this.options.blue.v = blue
         },  
         drawRectangle() {
             const ctx = this.canvas.ctx

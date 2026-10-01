@@ -29,7 +29,8 @@ import GreyscaleImage from "./pages/greyscale-image.vue";
 import ImageToShapeGrid from "./pages/image-to-shape-grid.vue";
 import CurvedLine from "./pages/curved-line.vue";
 import GridArray from "./pages/array-grid.vue"
-import RandomBackgroundColor from "./pages/random-bg-color.vue"
+import RandomColorRGB from "./pages/random-bg-color-rgb.vue"
+import RandomColorRGBRange from "./pages/random-bg-color-rgb-w-range.vue"
 
 const routes = [{
         path: "/",
@@ -266,9 +267,17 @@ const routes = [{
         },
     },
     {
-        path: "/random-background-color",
-        name: "Random background color",
-        component: RandomBackgroundColor,
+        path: "/random-background-color-rgb",
+        name: "Random background color RGB",
+        component: RandomColorRGB,
+        meta: {
+            group: "Randomness",
+        },
+    },
+    {
+        path: "/random-background-color-rgb-range",
+        name: "Random color RGB within range",
+        component: RandomColorRGBRange,
         meta: {
             group: "Randomness",
         },
