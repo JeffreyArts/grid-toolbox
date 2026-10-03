@@ -33,6 +33,7 @@ import RandomColorRGB from "./pages/random-bg-color-rgb.vue"
 import RandomColorRGBRange from "./pages/random-bg-color-rgb-w-range.vue"
 import RandomColorHSL from "./pages/random-color-hsl.vue"
 import RandomColorHSLRange from "./pages/random-color-hsl-w-range.vue"
+import RandomColorFromArray from "./pages/random-color-from-array.vue"
 
 const routes = [{
         path: "/",
@@ -296,6 +297,14 @@ const routes = [{
         path: "/random-color-hsl-range",
         name: "Random color HSL within range",
         component: RandomColorHSLRange,
+        meta: {
+            group: "Randomness",
+        },
+    },
+    {
+        path: "/random-color-from-color",
+        name: "Random color from array",
+        component: RandomColorFromArray,
         meta: {
             group: "Randomness",
         },
